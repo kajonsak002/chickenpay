@@ -2,7 +2,7 @@
 
 export default function Footer() {
     return (
-        <footer className="relative overflow-hidden bg-[#0a0a14] mt-16">
+        <footer className="relative overflow-hidden bg-[var(--bg-secondary)] mt-16 border-t border-[var(--border-primary)] transition-colors">
 
             {/* === Tech Pattern Background === */}
             <div className="absolute inset-0 pointer-events-none">
@@ -49,12 +49,12 @@ export default function Footer() {
                 flex items-center justify-center shadow-lg shadow-orange-500/20">
                                 <span className="text-lg">🐔</span>
                             </div>
-                            <span className="text-xl font-bold text-white tracking-tight">
+                            <span className="text-xl font-bold text-[var(--text-primary)] tracking-tight">
                                 Chicken<span className="text-orange-400">Pay</span>
                             </span>
                         </div>
-                        <p className="text-sm text-gray-500 leading-relaxed mb-6 max-w-xs">
-                            แพลตฟอร์มเติมเกมออนไลน์ และซื้อแอปพรีเมียม ราคาถูกที่สุด
+                        <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-6 max-w-xs">
+                            แพลตฟอร์มซื้อแอปพรีเมียม ราคาถูกที่สุด
                             ระบบอัตโนมัติรับทันที ปลอดภัย 100%
                         </p>
 
@@ -70,8 +70,8 @@ export default function Footer() {
                                     key={s.label}
                                     href="#"
                                     title={s.label}
-                                    className={`w-9 h-9 rounded-xl bg-white/5 border border-white/10
-                    flex items-center justify-center text-gray-500 text-sm
+                                    className={`w-9 h-9 rounded-xl bg-[var(--text-primary)]/5 border border-[var(--border-primary)]
+                    flex items-center justify-center text-[var(--text-secondary)] text-sm
                     ${s.color} hover:text-white
                     transition-all duration-300 hover:scale-110 hover:shadow-lg`}
                                 >
@@ -88,9 +88,9 @@ export default function Footer() {
                             เมนูหลัก
                         </h4>
                         <ul className="space-y-3">
-                            {["หน้าแรก", "เติมเกมออนไลน์", "ซื้อบัตรเติมเงิน", "เติมเงินมือถือ", "สุ่มของรางวัล"].map((item) => (
+                            {["หน้าแรก", "ซื้อบัตรเติมเงิน", "เติมเงินมือถือ", "สุ่มของรางวัล"].map((item) => (
                                 <li key={item}>
-                                    <a href="#" className="group flex items-center gap-2 text-sm text-gray-500 hover:text-orange-400 transition-all duration-300">
+                                    <a href="#" className="group flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-[var(--brand)] transition-all duration-300">
                                         <span className="w-0 group-hover:w-2 h-px bg-orange-500 transition-all duration-300" />
                                         {item}
                                     </a>
@@ -108,7 +108,7 @@ export default function Footer() {
                         <ul className="space-y-3">
                             {["วิธีการสั่งซื้อ", "วิธีชำระเงิน", "ตรวจสอบออเดอร์", "เงื่อนไขการใช้งาน", "นโยบายความเป็นส่วนตัว"].map((item) => (
                                 <li key={item}>
-                                    <a href="#" className="group flex items-center gap-2 text-sm text-gray-500 hover:text-orange-400 transition-all duration-300">
+                                    <a href="#" className="group flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-[var(--brand)] transition-all duration-300">
                                         <span className="w-0 group-hover:w-2 h-px bg-orange-500 transition-all duration-300" />
                                         {item}
                                     </a>
@@ -127,9 +127,9 @@ export default function Footer() {
                             {["PromptPay", "TrueMoney", "Visa", "MasterCard", "QR Code", "Mobile Banking"].map((method) => (
                                 <div
                                     key={method}
-                                    className="px-3 py-2 rounded-xl bg-white/5 border border-white/5
-                    text-[11px] text-gray-400 text-center font-medium
-                    hover:border-orange-500/30 hover:text-orange-400 hover:bg-orange-500/5
+                                    className="px-3 py-2 rounded-xl bg-[var(--text-primary)]/5 border border-[var(--border-primary)]
+                    text-[11px] text-[var(--text-secondary)] text-center font-medium
+                    hover:border-[var(--brand)]/30 hover:text-[var(--brand)] hover:bg-[var(--brand)]/5
                     transition-all duration-300 cursor-default"
                                 >
                                     {method}
@@ -142,7 +142,7 @@ export default function Footer() {
                 </div>
 
                 {/* === Bottom Bar === */}
-                <div className="mt-10 pt-6 border-t border-white/5">
+                <div className="mt-10 pt-6 border-t border-[var(--border-primary)]">
                     <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                         <p className="text-xs text-gray-600">
                             © 2026 ChickenPay. All rights reserved.

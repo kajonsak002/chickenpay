@@ -13,8 +13,8 @@ const defaultSlides: BannerSlide[] = [
     {
         id: 1,
         image: "/banner1.png",
-        title: "เติมเกมออนไลน์",
-        subtitle: "ราคาถูกที่สุด รับทันที ระบบอัตโนมัติ 24 ชม.",
+        title: "แอปพรีเมียมราคาถูก",
+        subtitle: "รับประกันคุณภาพ รับประกันตลอดการใช้งาน",
     },
     {
         id: 2,
@@ -189,7 +189,7 @@ export default function Banner({
                         className={`
               h-2 rounded-full transition-all duration-300 cursor-pointer
               ${index === current
-                                ? "w-8 bg-orange-500"
+                                ? "w-8 bg-[var(--brand)]"
                                 : "w-2 bg-white/30 hover:bg-white/50"
                             }
             `}

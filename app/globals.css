@@ -1,1 +1,116 @@
 @import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+    --color-brand-light: var(--brand-light);
+    --color-brand: var(--brand);
+    --color-brand-dark: var(--brand-dark);
+
+    --color-bg-primary: var(--bg-primary);
+    --color-bg-secondary: var(--bg-secondary);
+    --color-bg-tertiary: var(--bg-tertiary);
+    --color-bg-nav: var(--bg-nav);
+
+    --color-text-primary: var(--text-primary);
+    --color-text-secondary: var(--text-secondary);
+    --color-text-muted: var(--text-muted);
+
+    --color-border-primary: var(--border-primary);
+    --color-border-hover: var(--border-hover);
+}
+
+@layer base {
+    :root {
+        /* Light Mode - Premium Clean */
+        --brand-light: #fb923c;
+        --brand: #f97316;
+        --brand-dark: #ea580c;
+
+        --bg-primary: #ffffff;
+        --bg-secondary: #f8fafc;
+        --bg-tertiary: #f1f5f9;
+        --bg-nav: rgba(255, 255, 255, 0.85);
+
+        --text-primary: #0f172a;
+        --text-secondary: #475569;
+        --text-muted: #94a3b8;
+
+        --border-primary: #e2e8f0;
+        --border-hover: #cbd5e1;
+    }
+
+    .dark {
+        /* Dark Mode - Premium Deep Space */
+        --brand-light: #fb923c;
+        --brand: #f97316;
+        --brand-dark: #ea580c;
+
+        --bg-primary: #05050A;
+        --bg-secondary: #0D0D16;
+        --bg-tertiary: #151522;
+        --bg-nav: rgba(5, 5, 10, 0.85);
+
+        --text-primary: #ffffff;
+        --text-secondary: #94a3b8;
+        --text-muted: #64748b;
+
+        --border-primary: rgba(255, 255, 255, 0.06);
+        --border-hover: rgba(249, 115, 22, 0.4);
+    }
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background-color 0.4s ease, color 0.4s ease;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Utilities */
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Custom Animations */
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+.animate-float {
+    animation: float 4s ease-in-out infinite;
+}
+
+@keyframes glow-pulse {
+    0% {
+        box-shadow: 0 0 15px rgba(249, 115, 22, 0.1);
+    }
+
+    50% {
+        box-shadow: 0 0 30px rgba(249, 115, 22, 0.3);
+    }
+
+    100% {
+        box-shadow: 0 0 15px rgba(249, 115, 22, 0.1);
+    }
+}
+
+.animate-glow-pulse {
+    animation: glow-pulse 3s infinite;
+}

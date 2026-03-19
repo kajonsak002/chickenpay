@@ -1,18 +1,17 @@
 import Navbar from "./Navbar"
 import Footer from "./Footer"
 import Banner from "./Banner"
-import QuickMenu from "./QuickMenu"
-import GameTopUpGrid from "./GameTopUpGrid"
 import PremiumAppsGrid from "./PremiumAppsGrid"
+import { getProductsByCategory } from "@/app/lib/products"
 
-export default function LandingPage() {
+export default async function LandingPage() {
+    const categories = await getProductsByCategory();
+
     return (
-        <main className="bg-[#0f0f1a] min-h-screen">
+        <main className="bg-[var(--bg-primary)] min-h-screen">
             <Navbar />
             <Banner />
-            <QuickMenu />
-            <GameTopUpGrid />
-            <PremiumAppsGrid />
+            <PremiumAppsGrid categories={categories} />
             <Footer />
         </main>
     );

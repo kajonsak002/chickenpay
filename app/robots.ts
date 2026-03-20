@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/admin/', '/api/'],
     },
-    sitemap: 'https://chickenpay.com/sitemap.xml', // Change this domain to the real one later
+    sitemap: 'https://chickenpay-dev.up.railway.app/sitemap.xml', // Change this domain to the real one later
   }
 }

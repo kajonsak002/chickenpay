@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import NavbarClient from "../components/ui/NavbarClient";
 import Footer from "../components/ui/Footer";
 import { loginAction } from "../actions/auth";
@@ -8,6 +9,23 @@ import Swal from "sweetalert2";
 
 export default function LoginPage() {
     const [state, formAction, isPending] = useActionState(loginAction, null);
+    const searchParams = useSearchParams();
+
+    useEffect(() => {
+        const success = searchParams.get("success");
+        if (success === "registered") {
+            Swal.fire({
+                icon: "success",
+                title: "สมัครสมาชิกสำเร็จ!",
+                text: "กรุณาเข้าสู่ระบบด้วยบัญชีที่คุณสร้าง",
+                background: "#1e1e2d",
+                color: "#fff",
+                confirmButtonColor: "#f97316",
+                confirmButtonText: "ตกลง",
+                customClass: { popup: 'rounded-2xl border border-green-500/20 shadow-2xl shadow-green-500/10' }
+            });
+        }
+    }, [searchParams]);
 
     useEffect(() => {
         if (state?.error) {

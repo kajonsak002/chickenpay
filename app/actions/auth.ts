@@ -59,21 +59,12 @@ export async function registerAction(prevState: any, formData: FormData) {
             return { error: data.message || "เกิดข้อผิดพลาดในการสมัครสมาชิก" };
         }
 
-        // Set HttpOnly cookie
-        const cookieStore = await cookies();
-        cookieStore.set("token", data.access_token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: "lax",
-            path: "/",
-            maxAge: 7 * 24 * 60 * 60 // 7 days
-        });
-
+        // Successfully registered, now redirect to login
     } catch (err: any) {
         return { error: err.message || "การเชื่อมต่อล้มเหลว" };
     }
 
-    redirect("/profile");
+    redirect("/login?success=registered");
 }
 
 export async function logoutAction() {

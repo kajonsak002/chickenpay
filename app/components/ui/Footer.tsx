@@ -1,6 +1,9 @@
 "use client";
 
+import { useAuth } from "../../contexts/AuthContext";
+
 export default function Footer() {
+    const { isLoggedIn } = useAuth();
     return (
         <footer className="relative overflow-hidden bg-[var(--bg-secondary)] mt-16 border-t border-[var(--border-primary)] transition-colors">
 
@@ -88,11 +91,16 @@ export default function Footer() {
                             เมนูหลัก
                         </h4>
                         <ul className="space-y-3">
-                            {["หน้าแรก", "ซื้อบัตรเติมเงิน", "เติมเงินมือถือ", "สุ่มของรางวัล"].map((item) => (
-                                <li key={item}>
-                                    <a href="#" className="group flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-[var(--brand)] transition-all duration-300">
+                            {[
+                                { label: "หน้าแรก", href: "/" },
+                                { label: "แอปพรีเมียม", href: "/apps" },
+                                { label: "เติมเงิน", href: "/topup" },
+                                { label: "ประวัติการสั่งซื้อ", href: "/profile" }
+                            ].map((item) => (
+                                <li key={item.label}>
+                                    <a href={item.href} className="group flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-[var(--brand)] transition-all duration-300">
                                         <span className="w-0 group-hover:w-2 h-px bg-orange-500 transition-all duration-300" />
-                                        {item}
+                                        {item.label}
                                     </a>
                                 </li>
                             ))}
@@ -106,11 +114,17 @@ export default function Footer() {
                             ช่วยเหลือ
                         </h4>
                         <ul className="space-y-3">
-                            {["วิธีการสั่งซื้อ", "วิธีชำระเงิน", "ตรวจสอบออเดอร์", "เงื่อนไขการใช้งาน", "นโยบายความเป็นส่วนตัว"].map((item) => (
-                                <li key={item}>
-                                    <a href="#" className="group flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-[var(--brand)] transition-all duration-300">
+                            {[
+                                { label: "วิธีการสั่งซื้อ", href: "#" },
+                                { label: "วิธีชำระเงิน", href: "#" },
+                                { label: "ตรวจสอบออเดอร์", href: "/profile" },
+                                { label: "เงื่อนไขการใช้งาน", href: "#" },
+                                { label: "นโยบายความเป็นส่วนตัว", href: "#" }
+                            ].map((item) => (
+                                <li key={item.label}>
+                                    <a href={item.href} className="group flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-[var(--brand)] transition-all duration-300">
                                         <span className="w-0 group-hover:w-2 h-px bg-orange-500 transition-all duration-300" />
-                                        {item}
+                                        {item.label}
                                     </a>
                                 </li>
                             ))}

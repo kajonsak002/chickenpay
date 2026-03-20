@@ -120,6 +120,19 @@ export default function TopupClient() {
 
     return (
         <div className="flex flex-col items-center">
+            {/* Back Button */}
+            <div className="w-full flex justify-start mb-6">
+                <button
+                    onClick={() => router.back()}
+                    className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:bg-white/10 transition-all duration-300 group"
+                >
+                    <svg className="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                    <span className="text-sm font-medium">ย้อนกลับ</span>
+                </button>
+            </div>
+
             {/* Header Text */}
             <div className="text-center mb-10">
                 <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 font-bold text-xs uppercase tracking-widest mb-4">

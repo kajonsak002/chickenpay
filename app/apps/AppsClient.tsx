@@ -45,7 +45,7 @@ export default function AppsClient({ categories }: { categories: CategoryGroup[]
                             className="w-full pl-11 pr-4 py-3 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-primary)] text-[var(--text-primary)] placeholder-[var(--text-secondary)] text-sm focus:outline-none focus:border-orange-500/50 focus:ring-1 focus:ring-orange-500/30 transition-all"
                         />
                     </div>
-                    <button
+                    {/* <button
                         onClick={() => setFilterStock(!filterStock)}
                         className={`px-5 py-3 rounded-xl text-sm font-medium transition-all cursor-pointer
               ${filterStock
@@ -54,7 +54,7 @@ export default function AppsClient({ categories }: { categories: CategoryGroup[]
                             }`}
                     >
                         ✅ พร้อมจำหน่าย
-                    </button>
+                    </button> */}
                 </div>
 
                 {/* Results count */}

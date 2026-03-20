@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import Breadcrumb from "../components/ui/Breadcrumb";
 import { useRouter } from "next/navigation";
 // @ts-ignore
 import generatePayload from "promptpay-qr";
@@ -119,18 +120,10 @@ export default function TopupClient() {
     };
 
     return (
-        <div className="flex flex-col items-center">
-            {/* Back Button */}
+        <div className="flex flex-col items-center w-full">
+            {/* Breadcrumb */}
             <div className="w-full flex justify-start mb-6">
-                <button
-                    onClick={() => router.back()}
-                    className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:bg-white/10 transition-all duration-300 group"
-                >
-                    <svg className="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                    </svg>
-                    <span className="text-sm font-medium">ย้อนกลับ</span>
-                </button>
+                <Breadcrumb />
             </div>
 
             {/* Header Text */}

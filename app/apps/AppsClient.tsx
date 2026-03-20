@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Breadcrumb from "../components/ui/Breadcrumb";
 import { CategoryGroup } from "../lib/products";
 
 export default function AppsClient({ categories }: { categories: CategoryGroup[] }) {
@@ -15,6 +16,7 @@ export default function AppsClient({ categories }: { categories: CategoryGroup[]
 
     return (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <Breadcrumb />
                 {/* Header */}
                 <div className="mb-8">
                     <div className="flex items-center gap-3 mb-2">

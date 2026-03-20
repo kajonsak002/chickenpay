@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { useAuth } from "../../contexts/AuthContext";
 
 const navLinks = [
     { label: "หน้าแรก", href: "/" },
     { label: "แอปพรีเมียม", href: "/apps" },
-    { label: "ติดต่อเรา", href: "#contact" },
+    { label: "ติดต่อเรา", href: "/contact" },
 ];
 
 export default function NavbarClient({
@@ -17,6 +18,7 @@ export default function NavbarClient({
     isAdmin?: boolean;
 }) {
     const auth = useAuth();
+    const pathname = usePathname();
 
     // Use props if provided (from Server Component), otherwise fallback to Context
     const isLoggedIn = propIsLoggedIn ?? auth.isLoggedIn;
@@ -44,19 +46,35 @@ export default function NavbarClient({
                         </div>
                     </a>
 
-                    {/* Desktop Nav Links */}
                     <div className="hidden md:flex items-center gap-1">
-                        {navLinks.map((link) => (
-                            <a
-                                key={link.label}
-                                href={link.href}
-                                className="relative px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 text-gray-400 hover:text-white hover:bg-white/5"
-                            >
-                                {link.label}
-                            </a>
-                        ))}
+                        {navLinks.map((link) => {
+                            const isActive = pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href));
+                            return (
+                                <a
+                                    key={link.label}
+                                    href={link.href}
+                                    className={`relative px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 flex items-center gap-2
+                                        ${isActive
+                                            ? "text-white bg-white/5"
+                                            : "text-gray-400 hover:text-white hover:bg-white/5"
+                                        }`}
+                                >
+                                    {link.label}
+                                    {isActive && (
+                                        <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-4 h-[2px] bg-orange-500 rounded-full shadow-[0_0_8px_rgba(249,115,22,0.8)]" />
+                                    )}
+                                </a>
+                            );
+                        })}
                         {isAdmin && (
-                            <a href="/admin" className="relative px-4 py-2 rounded-xl text-sm font-bold transition-all duration-300 text-purple-400 hover:text-white hover:bg-purple-500/10">
+                            <a
+                                href="/admin"
+                                className={`relative px-4 py-2 rounded-xl text-sm font-bold transition-all duration-300 flex items-center gap-2
+                                    ${pathname.startsWith("/admin")
+                                        ? "text-white bg-purple-500/10"
+                                        : "text-purple-400 hover:text-white hover:bg-purple-500/10"
+                                    }`}
+                            >
                                 🛡 แอดมิน
                             </a>
                         )}

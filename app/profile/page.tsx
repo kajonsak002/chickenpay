@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import Navbar from "../components/ui/Navbar";
 import Footer from "../components/ui/Footer";
+import Breadcrumb from "../components/ui/Breadcrumb";
 import { logoutAction } from "../actions/auth";
 import HistoryTabs from "./HistoryTabs";
 
@@ -73,10 +74,11 @@ export default async function ProfilePage() {
         <main className="bg-[var(--bg-primary)] min-h-screen flex flex-col">
             <Navbar />
 
-            <div className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
-                <div className="flex flex-col md:flex-row gap-8">
+            <div className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+                <Breadcrumb />
+                <div className="flex flex-col lg:flex-row gap-8">
                     {/* Left Sidebar - Profile & Wallet */}
-                    <div className="w-full md:w-1/3 space-y-6">
+                    <div className="w-full lg:w-[320px] lg:flex-shrink-0 space-y-6">
                         {/* Profile Card */}
                         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-6 shadow-lg">
                             <div className="flex items-center gap-4 mb-6">
@@ -121,7 +123,7 @@ export default async function ProfilePage() {
                     </div>
 
                     {/* Right Content - History Tabs */}
-                    <div className="w-full md:w-2/3">
+                    <div className="flex-1 w-full min-w-0">
                         <HistoryTabs orders={orders} topups={topups} />
                     </div>
                 </div>

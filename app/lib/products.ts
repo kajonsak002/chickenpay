@@ -32,17 +32,19 @@ export async function getAllProducts(): Promise<Product[]> {
         const data = await res.json();
 
         // Map backend product schema to frontend schema
-        return data.map((item: any) => ({
-            id: item.id || '',
-            name: item.name || '',
-            description: item.description || '',
-            price: (item.priceVip !== null && item.priceVip !== undefined) ? item.priceVip.toString() : (item.price || 0).toString(),
-            retailPrice: (item.price || 0).toString(),
-            img: item.imageUrl || item.img || 'https://placehold.co/400x400/1e1e2d/6366f1?text=App',
-            stock: (item.stock || 0).toString(),
-            status: (item.isActive !== false && (item.stock || 0) > 0) ? "พร้อมจำหน่าย" : "สินค้าหมด",
-            category: item.category || 'Uncategorized',
-        }));
+        return data
+            .filter((item: any) => item.category && item.category.toLowerCase() !== 'uncategorized')
+            .map((item: any) => ({
+                id: item.id || '',
+                name: item.name || '',
+                description: item.description || '',
+                price: (item.priceVip !== null && item.priceVip !== undefined) ? item.priceVip.toString() : (item.price || 0).toString(),
+                retailPrice: (item.price || 0).toString(),
+                img: item.imageUrl || item.img || 'https://placehold.co/400x400/1e1e2d/6366f1?text=ALALAL',
+                stock: (item.stock || 0).toString(),
+                status: (item.isActive !== false && (item.stock || 0) > 0) ? "พร้อมจำหน่าย" : "สินค้าหมด",
+                category: item.category,
+            }));
 
     } catch (error) {
         console.error("Error fetching products:", error);
@@ -84,6 +86,8 @@ export async function getProductById(id: string): Promise<Product | undefined> {
         if (!res.ok) return undefined;
 
         const item = await res.json();
+        if (!item.category || item.category.toLowerCase() === 'uncategorized') return undefined;
+
         return {
             id: item.id,
             name: item.name,
@@ -93,7 +97,7 @@ export async function getProductById(id: string): Promise<Product | undefined> {
             img: item.imageUrl || 'https://placehold.co/400x400/1e1e2d/6366f1?text=App',
             stock: item.stock.toString(),
             status: (item.isActive && item.stock > 0) ? "พร้อมจำหน่าย" : "สินค้าหมด",
-            category: item.category || 'Uncategorized',
+            category: item.category,
         };
     } catch (error) {
         return undefined;

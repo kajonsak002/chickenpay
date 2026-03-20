@@ -118,7 +118,7 @@ export default function Footer() {
                                 { label: "วิธีการสั่งซื้อ", href: "#" },
                                 { label: "วิธีชำระเงิน", href: "#" },
                                 { label: "ตรวจสอบออเดอร์", href: "/profile" },
-                                { label: "เงื่อนไขการใช้งาน", href: "#" },
+                                { label: "ติดต่อเรา", href: "/contact" },
                                 { label: "นโยบายความเป็นส่วนตัว", href: "#" }
                             ].map((item) => (
                                 <li key={item.label}>

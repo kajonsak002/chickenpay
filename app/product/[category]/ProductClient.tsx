@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Breadcrumb from "../../components/ui/Breadcrumb";
 import { useParams, useRouter } from "next/navigation";
 import { Product } from "../../lib/products";
 import { createOrderAction } from "../../actions/orders";
@@ -70,14 +71,12 @@ export default function ProductClient({ allProducts }: { allProducts: Product[] 
 
     return (
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            {/* Back */}
-            <a href="/apps" className="inline-flex items-center gap-2 text-[var(--text-secondary)] hover:text-orange-400 text-sm mb-6 transition-colors font-medium">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-                กลับไปหน้าแอปพรีเมียม
-            </a>
-
+            <Breadcrumb items={[
+                { label: "หน้าแรก", href: "/" },
+                { label: "แอปพรีเมียม", href: "/apps" },
+                { label: category }
+            ]} />
+            
             <div className="grid md:grid-cols-[320px_1fr] gap-8">
                 {/* Left — App card */}
                 <div>

@@ -38,7 +38,6 @@ interface Order {
 }
 
 import LogoutButton from "../components/ui/LogoutButton";
-
 export default async function ProfilePage() {
     const cookieStore = await cookies();
     const token = cookieStore.get("token")?.value;
@@ -115,9 +114,6 @@ export default async function ProfilePage() {
                                 <a href="/topup" className="flex-1 bg-orange-500 hover:bg-orange-600 text-white text-center text-sm font-bold py-2.5 rounded-xl transition-colors shadow-lg shadow-orange-500/20">
                                     เติมเงิน
                                 </a>
-                                <button className="flex-1 bg-white/5 hover:bg-white/10 text-white text-sm font-bold py-2.5 rounded-xl border border-white/10 transition-colors">
-                                    ประวัติ
-                                </button>
                             </div>
                         </div>
                     </div>

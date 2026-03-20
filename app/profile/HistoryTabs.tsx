@@ -12,9 +12,8 @@ export default function HistoryTabs({ orders, topups }: { orders: any[], topups:
             <div className="flex border-b border-[var(--border-primary)] mb-6">
                 <button
                     onClick={() => setActiveTab("orders")}
-                    className={`pb-3 px-4 text-sm font-bold transition-colors relative flex items-center gap-2 ${
-                        activeTab === "orders" ? "text-blue-500" : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
-                    }`}
+                    className={`pb-3 px-4 text-sm font-bold transition-colors relative flex items-center gap-2 ${activeTab === "orders" ? "text-blue-500" : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+                        }`}
                 >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>
                     ประวัติการสั่งซื้อ
@@ -22,9 +21,8 @@ export default function HistoryTabs({ orders, topups }: { orders: any[], topups:
                 </button>
                 <button
                     onClick={() => setActiveTab("topups")}
-                    className={`pb-3 px-4 text-sm font-bold transition-colors relative flex items-center gap-2 ${
-                        activeTab === "topups" ? "text-orange-500" : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
-                    }`}
+                    className={`pb-3 px-4 text-sm font-bold transition-colors relative flex items-center gap-2 ${activeTab === "topups" ? "text-orange-500" : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+                        }`}
                 >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                     ประวัติการฝากเงิน
@@ -100,7 +98,7 @@ export default function HistoryTabs({ orders, topups }: { orders: any[], topups:
                                                         const rawText = dataItem.textdb || "";
                                                         // Attempt to detect user:pass or email|pass
                                                         const parts = rawText.split(/[|\n:]/).map((s: string) => s.trim()).filter(Boolean);
-                                                        
+
                                                         const handleCopy = (text: string, label: string) => {
                                                             navigator.clipboard.writeText(text);
                                                             Swal.fire({
@@ -119,7 +117,7 @@ export default function HistoryTabs({ orders, topups }: { orders: any[], topups:
                                                             <div key={idx} className="bg-[var(--bg-tertiary)] p-4 rounded-xl border border-[var(--border-primary)] group">
                                                                 <div className="flex justify-between items-center mb-3 pb-2 border-b border-[var(--border-primary)]/50">
                                                                     <span className="text-[10px] text-[var(--text-secondary)] uppercase font-bold tracking-wider">ชุดที่ {idx + 1}</span>
-                                                                    <button 
+                                                                    <button
                                                                         onClick={() => handleCopy(rawText, 'ข้อมูลทั้งหมด')}
                                                                         className="text-[10px] text-blue-400 hover:text-blue-300 flex items-center gap-1 transition-colors"
                                                                     >

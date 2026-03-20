@@ -76,7 +76,7 @@ export default function ProductClient({ allProducts }: { allProducts: Product[] 
                 { label: "แอปพรีเมียม", href: "/apps" },
                 { label: category }
             ]} />
-            
+
             <div className="grid md:grid-cols-[320px_1fr] gap-8">
                 {/* Left — App card */}
                 <div>
@@ -232,7 +232,7 @@ export default function ProductClient({ allProducts }: { allProducts: Product[] 
 
                     {/* Order section */}
                     {selectedProduct && (
-                        <div className="mt-6 p-5 rounded-2xl bg-[var(--bg-secondary)] border border-[var(--border-primary)] shadow-[0_8px_30px_rgba(59,130,246,0.08)] sticky bottom-4">
+                        <div className="mt-6 p-5 rounded-2xl bg-[var(--bg-secondary)] border border-[var(--border-primary)] shadow-[0_8px_30px_rgba(59,130,246,0.08)] sticky bottom-4 z-99">
                             <h3 className="text-[var(--text-primary)] font-bold mb-4 flex items-center gap-2">
                                 <span className="w-1.5 h-5 bg-blue-500 rounded-full hidden sm:block"></span>
                                 สั่งซื้อสินค้า

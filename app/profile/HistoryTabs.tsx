@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Swal from "sweetalert2";
 
 export default function HistoryTabs({ orders, topups }: { orders: any[], topups: any[] }) {
     const [activeTab, setActiveTab] = useState<"orders" | "topups">("orders");
@@ -95,17 +96,63 @@ export default function HistoryTabs({ orders, topups }: { orders: any[], topups:
                                                     ข้อมูลบัญชีที่จัดส่ง
                                                 </h4>
                                                 <div className="space-y-3">
-                                                    {order.deliveryData.map((dataItem: any, idx: number) => (
-                                                        <div key={idx} className="bg-[var(--bg-tertiary)] p-3 rounded-lg border border-[var(--border-primary)]">
-                                                            <div className="flex justify-between items-center mb-2 pb-2 border-b border-[var(--border-primary)]/50">
-                                                                <span className="text-[10px] text-[var(--text-secondary)] uppercase font-bold tracking-wider">บัญชีที่ {idx + 1}</span>
-                                                                <span className="text-[10px] text-blue-400">UID: {dataItem.uid || '-'}</span>
+                                                    {order.deliveryData.map((dataItem: any, idx: number) => {
+                                                        const rawText = dataItem.textdb || "";
+                                                        // Attempt to detect user:pass or email|pass
+                                                        const parts = rawText.split(/[|\n:]/).map((s: string) => s.trim()).filter(Boolean);
+                                                        
+                                                        const handleCopy = (text: string, label: string) => {
+                                                            navigator.clipboard.writeText(text);
+                                                            Swal.fire({
+                                                                toast: true,
+                                                                position: 'top-end',
+                                                                icon: 'success',
+                                                                title: `คัดลอก ${label} แล้ว`,
+                                                                showConfirmButton: false,
+                                                                timer: 1500,
+                                                                background: '#1e1e2d',
+                                                                color: '#fff'
+                                                            });
+                                                        };
+
+                                                        return (
+                                                            <div key={idx} className="bg-[var(--bg-tertiary)] p-4 rounded-xl border border-[var(--border-primary)] group">
+                                                                <div className="flex justify-between items-center mb-3 pb-2 border-b border-[var(--border-primary)]/50">
+                                                                    <span className="text-[10px] text-[var(--text-secondary)] uppercase font-bold tracking-wider">ชุดที่ {idx + 1}</span>
+                                                                    <button 
+                                                                        onClick={() => handleCopy(rawText, 'ข้อมูลทั้งหมด')}
+                                                                        className="text-[10px] text-blue-400 hover:text-blue-300 flex items-center gap-1 transition-colors"
+                                                                    >
+                                                                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" /></svg>
+                                                                        คัดลอกทั้งหมด
+                                                                    </button>
+                                                                </div>
+
+                                                                {parts.length >= 2 ? (
+                                                                    <div className="space-y-3">
+                                                                        <div className="relative">
+                                                                            <p className="text-[10px] text-gray-500 mb-1">Email / Username</p>
+                                                                            <div className="flex items-center gap-2 bg-black/20 p-2.5 rounded-lg border border-white/5">
+                                                                                <span className="flex-1 font-mono text-sm text-blue-400 truncate">{parts[0]}</span>
+                                                                                <button onClick={() => handleCopy(parts[0], 'อีเมล')} className="p-1.5 hover:bg-white/10 rounded-md transition-colors"><svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2" /></svg></button>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="relative">
+                                                                            <p className="text-[10px] text-gray-500 mb-1">Password</p>
+                                                                            <div className="flex items-center gap-2 bg-black/20 p-2.5 rounded-lg border border-white/5">
+                                                                                <span className="flex-1 font-mono text-sm text-orange-400 truncate">{parts[1]}</span>
+                                                                                <button onClick={() => handleCopy(parts[1], 'รหัสผ่าน')} className="p-1.5 hover:bg-white/10 rounded-md transition-colors"><svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2" /></svg></button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                ) : (
+                                                                    <p className="text-sm text-[var(--text-primary)] whitespace-pre-wrap font-mono p-2 bg-black/20 rounded-lg">
+                                                                        {rawText}
+                                                                    </p>
+                                                                )}
                                                             </div>
-                                                            <p className="text-sm text-[var(--text-primary)] whitespace-pre-wrap font-mono select-all">
-                                                                {dataItem.textdb || JSON.stringify(dataItem)}
-                                                            </p>
-                                                        </div>
-                                                    ))}
+                                                        );
+                                                    })}
                                                 </div>
                                             </div>
                                         )}

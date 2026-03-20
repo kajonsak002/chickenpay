@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   // Use a generic placeholder base URL, user updates on launch
-  const baseUrl = 'https://chickenpay-dev.up.railway.app/';
+  const baseUrl = 'https://chickenpay-dev.up.railway.app';
 
   return [
     {

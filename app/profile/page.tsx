@@ -36,6 +36,8 @@ interface Order {
     deliveryData?: any;
 }
 
+import LogoutButton from "../components/ui/LogoutButton";
+
 export default async function ProfilePage() {
     const cookieStore = await cookies();
     const token = cookieStore.get("token")?.value;
@@ -89,14 +91,7 @@ export default async function ProfilePage() {
                                 </div>
                             </div>
 
-                            <form action={logoutAction}>
-                                <button
-                                    type="submit"
-                                    className="w-full py-2.5 rounded-xl border border-red-500/30 text-red-500 text-sm font-semibold hover:bg-red-500 hover:text-white transition-all duration-300"
-                                >
-                                    ออกจากระบบ
-                                </button>
-                            </form>
+                            <LogoutButton />
                         </div>
 
                         {/* Wallet Card */}

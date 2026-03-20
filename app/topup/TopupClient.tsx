@@ -209,7 +209,7 @@ export default function TopupClient() {
                         </div>
 
                         <div className="bg-[#133F6E]/5 rounded-xl p-4 mt-6 text-center">
-                            <p className="text-sm font-bold text-[#133F6E]">ชื่อบัญชี: บจก. ชิกเก้นเพย์ (จำลอง)</p>
+                            <p className="text-sm font-bold text-[#133F6E]">ชื่อบัญชี: ขจรศักดิ์ ลี้พงษ์กุล</p>
                             <p className="text-xs text-gray-500 font-medium mt-1">รหัสอ้างอิง: REF{(Math.random() * 1000000).toFixed(0)}</p>
                         </div>
                     </div>

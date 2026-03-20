@@ -13,11 +13,42 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ChickenPay — ศูนย์รวมแอปพรีเมียมราคาถูก",
-  description: "แหล่งรวมแอปพลิเคชันพรีเมียมราคาประหยัด Netflix, Spotify, YouTube Premium และอีกมากมาย พร้อมรับประกันตลอดการใช้งาน",
+  metadataBase: new URL('https://chickenpay.com'),
+  title: {
+    default: "ChickenPay — ศูนย์รวมแอปพรีเมียมและบัญชีราคาถูก อันดับ 1",
+    template: "%s | ChickenPay",
+  },
+  description: "แหล่งรวมแอปพลิเคชันพรีเมียมราคาประหยัด Netflix, Spotify, YouTube Premium พร้อมรับประกันการใช้งาน 100% ส่งมอบอัตโนมัติ 24 ชั่วโมง ของแท้ราคาถูกที่สุด",
+  keywords: ["แอปพรีเมียม", "Netflix ราคาถูก", "Spotify พรีเมียม", "Youtube Premium ของแท้", "แอปแท้", "ซื้อแอปราคาถูก", "ChickenPay"],
+  openGraph: {
+    title: "ChickenPay — ศูนย์รวมแอปพรีเมียมและบัญชีราคาถูก",
+    description: "แพลตฟอร์มจำหน่ายบัญชีสตรีมมิ่งพรีเมียมของแท้ ถูกที่สุด พร้อมรับประกัน 100% จัดส่งทันที",
+    url: "https://chickenpay.com",
+    siteName: "ChickenPay Premium Apps",
+    locale: "th_TH",
+    type: "website",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  twitter: {
+    title: "ChickenPay — ศูนย์รวมแอปพรีเมียมราคาถูก",
+    card: "summary_large_image",
+  },
   icons: {
     icon: "/logo.png",
     apple: "/logo.png",
+  },
+  verification: {
+    google: "I8-c7XyyB-kCcnM7wzXvl4lOFFtvque0GKaxGdrAkDo",
   },
 };
 

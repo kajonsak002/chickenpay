@@ -1,17 +1,36 @@
 "use client";
 
 import { useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import NavbarClient from "../../components/ui/NavbarClient";
 import Footer from "../../components/ui/Footer";
 import { Product } from "../../lib/products";
+import { createOrderAction } from "../../actions/orders";
 
 export default function ProductClient({ allProducts }: { allProducts: Product[] }) {
     const params = useParams();
+    const router = useRouter();
     const category = decodeURIComponent(params.category as string);
 
     const products = allProducts.filter((p) => p.category === category);
     const [selected, setSelected] = useState<string | null>(null);
+    const [isPurchasing, setIsPurchasing] = useState(false);
+
+    const handlePurchase = async () => {
+        if (!selectedProduct) return;
+        
+        setIsPurchasing(true);
+        const result = await createOrderAction(selectedProduct.id, 1);
+        setIsPurchasing(false);
+
+        if (result.error) {
+            alert(`ไม่สามารถซื้อสินค้าได้: ${result.error}`);
+        } else {
+            alert("✅ สั่งซื้อสินค้าสำเร็จ! สามารถดูบัญชีสินค้าได้ที่หน้าโปรไฟล์");
+            router.push("/profile");
+            router.refresh();
+        }
+    };
 
     if (products.length === 0) {
         return (
@@ -240,8 +259,15 @@ export default function ProductClient({ allProducts }: { allProducts: Product[] 
                                 </div>
 
                                 {/* Buy button */}
-                                <button className="w-full mt-5 py-3.5 rounded-xl text-sm font-bold bg-gradient-to-r from-blue-500 to-blue-700 text-white shadow-[0_4px_15px_rgba(59,130,246,0.3)] hover:shadow-[0_6px_20px_rgba(59,130,246,0.4)] hover:-translate-y-0.5 active:scale-95 transition-all cursor-pointer">
-                                    ชำระเงิน ฿{parseFloat(selectedProduct.retailPrice).toFixed(0)}
+                                <button 
+                                    onClick={handlePurchase}
+                                    disabled={isPurchasing}
+                                    className={`w-full mt-5 py-3.5 rounded-xl text-sm font-bold shadow-[0_4px_15px_rgba(59,130,246,0.3)] transition-all cursor-pointer text-white
+                                        ${isPurchasing 
+                                            ? "bg-blue-800 opacity-70 cursor-not-allowed" 
+                                            : "bg-gradient-to-r from-blue-500 to-blue-700 hover:shadow-[0_6px_20px_rgba(59,130,246,0.4)] hover:-translate-y-0.5 active:scale-95"}`}
+                                >
+                                    {isPurchasing ? "กำลังสั่งซื้อ..." : `ชำระเงิน ฿${parseFloat(selectedProduct.retailPrice).toFixed(0)}`}
                                 </button>
                             </div>
                         )}

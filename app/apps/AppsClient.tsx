@@ -17,7 +17,7 @@ export default function AppsClient({ categories }: { categories: CategoryGroup[]
 
     return (
         <main className="bg-[var(--bg-primary)] min-h-screen">
-            <NavbarClient isLoggedIn={false} />
+            <NavbarClient />
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 {/* Header */}

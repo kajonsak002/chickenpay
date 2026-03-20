@@ -26,7 +26,7 @@ export default function LoginPage() {
 
     return (
         <main className="bg-[var(--bg-primary)] min-h-screen flex flex-col">
-            <NavbarClient isLoggedIn={false} />
+            <NavbarClient />
             <div className="flex-1 flex items-center justify-center p-4 py-12">
                 <div className="w-full max-w-md bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-6 sm:p-8 shadow-2xl">
                     <div className="text-center mb-8">

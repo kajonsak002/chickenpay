@@ -1,11 +1,7 @@
 "use client";
 
 import { useState } from "react";
-
-interface NavbarClientProps {
-    isLoggedIn: boolean;
-    isAdmin?: boolean;
-}
+import { useAuth } from "../../contexts/AuthContext";
 
 const navLinks = [
     { label: "หน้าแรก", href: "/" },
@@ -13,7 +9,8 @@ const navLinks = [
     { label: "ติดต่อเรา", href: "#contact" },
 ];
 
-export default function NavbarClient({ isLoggedIn, isAdmin }: NavbarClientProps) {
+export default function NavbarClient() {
+    const { isLoggedIn, isAdmin } = useAuth();
     const [menuOpen, setMenuOpen] = useState(false);
 
     return (

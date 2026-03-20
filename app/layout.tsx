@@ -22,19 +22,42 @@ export const metadata: Metadata = {
 };
 
 import { ThemeProvider } from "./components/ThemeProvider";
+import { AuthProvider } from "./contexts/AuthContext";
+import { cookies } from "next/headers";
 
-export default function RootLayout({
+async function getUser() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token")?.value;
+  if (!token) return null;
+  
+  try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'}/auth/profile`, {
+          headers: { Authorization: `Bearer ${token}` },
+          cache: 'no-store'
+      });
+      if (res.ok) return await res.json();
+      return null;
+  } catch {
+      return null;
+  }
+}
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const user = await getUser();
+
   return (
     <html lang="th" className="dark">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider>
-          {children}
+          <AuthProvider user={user}>
+            {children}
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

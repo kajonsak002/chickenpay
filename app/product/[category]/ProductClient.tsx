@@ -55,7 +55,7 @@ export default function ProductClient({ allProducts }: { allProducts: Product[] 
     if (products.length === 0) {
         return (
             <main className="bg-[var(--bg-primary)] min-h-screen">
-                <NavbarClient isLoggedIn={false} />
+                <NavbarClient />
                 <div className="max-w-5xl mx-auto px-4 py-20 text-center">
                     <p className="text-5xl mb-4">😔</p>
                     <h1 className="text-[var(--text-primary)] text-2xl font-bold mb-2">ไม่พบสินค้า</h1>
@@ -76,7 +76,7 @@ export default function ProductClient({ allProducts }: { allProducts: Product[] 
 
     return (
         <main className="bg-[var(--bg-primary)] min-h-screen">
-            <NavbarClient isLoggedIn={false} />
+            <NavbarClient />
 
             <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 {/* Back */}

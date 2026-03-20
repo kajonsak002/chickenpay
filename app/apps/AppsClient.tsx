@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import NavbarClient from "../components/ui/NavbarClient";
-import Footer from "../components/ui/Footer";
 import { CategoryGroup } from "../lib/products";
 
 export default function AppsClient({ categories }: { categories: CategoryGroup[] }) {
@@ -16,10 +14,7 @@ export default function AppsClient({ categories }: { categories: CategoryGroup[]
     });
 
     return (
-        <main className="bg-[var(--bg-primary)] min-h-screen">
-            <NavbarClient />
-
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 {/* Header */}
                 <div className="mb-8">
                     <div className="flex items-center gap-3 mb-2">
@@ -155,8 +150,5 @@ export default function AppsClient({ categories }: { categories: CategoryGroup[]
                     </div>
                 )}
             </div>
-
-            <Footer />
-        </main>
     );
 }

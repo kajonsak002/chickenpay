@@ -1,4 +1,6 @@
 import { Metadata } from 'next';
+import Navbar from "../../components/ui/Navbar";
+import Footer from "../../components/ui/Footer";
 import { getAllProducts } from "../../lib/products";
 import ProductClient from "./ProductClient";
 
@@ -24,5 +26,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProductPage() {
     const allProducts = await getAllProducts();
-    return <ProductClient allProducts={allProducts} />;
+    return (
+        <>
+            <Navbar />
+            <ProductClient allProducts={allProducts} />
+            <Footer />
+        </>
+    );
 }

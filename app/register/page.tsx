@@ -1,12 +1,28 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import NavbarClient from "../components/ui/NavbarClient";
 import Footer from "../components/ui/Footer";
 import { registerAction } from "../actions/auth";
+import Swal from "sweetalert2";
 
 export default function RegisterPage() {
     const [state, formAction, isPending] = useActionState(registerAction, null);
+
+    useEffect(() => {
+        if (state?.error) {
+            Swal.fire({
+                icon: "error",
+                title: "สมัครสมาชิกไม่สำเร็จ",
+                text: state.error,
+                background: "#1e1e2d",
+                color: "#fff",
+                confirmButtonColor: "#ef4444",
+                confirmButtonText: "ลองอีกครั้ง",
+                customClass: { popup: 'rounded-2xl border border-red-500/20 shadow-2xl shadow-red-500/10' }
+            });
+        }
+    }, [state?.error]);
 
     return (
         <main className="bg-[var(--bg-primary)] min-h-screen flex flex-col">
@@ -22,12 +38,6 @@ export default function RegisterPage() {
                         <h1 className="text-2xl font-bold text-[var(--text-primary)] mb-2">สมัครสมาชิก</h1>
                         <p className="text-[var(--text-secondary)] text-sm">สร้างบัญชีเพื่อเริ่มต้นสั่งซื้อผ่าน ChickenPay</p>
                     </div>
-
-                    {state?.error && (
-                        <div className="mb-6 p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-500 text-sm font-medium text-center">
-                            {state.error}
-                        </div>
-                    )}
 
                     <form action={formAction} className="space-y-4">
                         <div>

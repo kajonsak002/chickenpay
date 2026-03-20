@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 // @ts-ignore
 import generatePayload from "promptpay-qr";
 import { QRCodeSVG } from "qrcode.react";
+import Swal from "sweetalert2";
 
 const PRESET_AMOUNTS = [50, 100, 300, 500, 1000, 2000];
 
@@ -25,7 +26,13 @@ export default function TopupClient() {
     const handleGenerate = () => {
         const amt = parseFloat(amount);
         if (isNaN(amt) || amt <= 0) {
-            alert("กรุณากรอกจำนวนเงินให้ถูกต้องและมากกว่า 0");
+            Swal.fire({
+                icon: 'warning',
+                title: 'ไม่ถูกต้อง',
+                text: 'กรุณากรอกจำนวนเงินให้ถูกต้องและมากกว่า 0',
+                background: '#1e1e2d', color: '#fff', confirmButtonColor: '#f97316',
+                customClass: { popup: 'rounded-2xl border border-orange-500/20' }
+            });
             return;
         }
 
@@ -47,7 +54,13 @@ export default function TopupClient() {
 
     const handleConfirm = async () => {
         if (!slipFile) {
-            alert("กรุณาแนบภาพสลิปการโอนเงิน");
+            Swal.fire({
+                icon: 'warning',
+                title: 'ไม่พบสลิป',
+                text: 'กรุณาแนบภาพสลิปการโอนเงินก่อนกดยืนยัน',
+                background: '#1e1e2d', color: '#fff', confirmButtonColor: '#f97316',
+                customClass: { popup: 'rounded-2xl border border-orange-500/20' }
+            });
             return;
         }
 
@@ -65,15 +78,34 @@ export default function TopupClient() {
             const result = await res.json();
 
             if (!res.ok) {
-                alert(`ข้อผิดพลาด: ${result.message || 'อัปโหลดสลิปไม่สำเร็จ'}`);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'ตรวจสอบสลิปไม่ผ่าน',
+                    text: result.message || 'อัปโหลดสลิปไม่สำเร็จ',
+                    background: '#1e1e2d', color: '#fff', confirmButtonColor: '#ef4444',
+                    customClass: { popup: 'rounded-2xl border border-red-500/20' }
+                });
             } else {
-                alert(result.message || "อัปโหลดและยืนยันยอดเงินสำเร็จ!");
-                router.push("/profile");
-                router.refresh();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'เติมเงินสำเร็จ!',
+                    text: result.message || "อัปโหลดและยืนยันยอดเงินสำเร็จ ระบบอัปเดตกระเป๋าเงินแล้ว",
+                    background: '#1e1e2d', color: '#fff', confirmButtonColor: '#3b82f6',
+                    customClass: { popup: 'rounded-2xl border border-blue-500/20' }
+                }).then(() => {
+                    router.push("/profile");
+                    router.refresh();
+                });
             }
 
         } catch (error: any) {
-            alert(`ข้อผิดพลาด: ${error.message}`);
+            Swal.fire({
+                icon: 'error',
+                title: 'ระบบขัดข้อง',
+                text: error.message || "เกิดข้อผิดพลาดในการเชื่อมต่อ",
+                background: '#1e1e2d', color: '#fff', confirmButtonColor: '#ef4444',
+                customClass: { popup: 'rounded-2xl border border-red-500/20' }
+            });
         } finally {
             setIsUploading(false);
         }

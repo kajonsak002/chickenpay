@@ -6,6 +6,7 @@ import NavbarClient from "../../components/ui/NavbarClient";
 import Footer from "../../components/ui/Footer";
 import { Product } from "../../lib/products";
 import { createOrderAction } from "../../actions/orders";
+import Swal from "sweetalert2";
 
 export default function ProductClient({ allProducts }: { allProducts: Product[] }) {
     const params = useParams();
@@ -18,17 +19,36 @@ export default function ProductClient({ allProducts }: { allProducts: Product[] 
 
     const handlePurchase = async () => {
         if (!selectedProduct) return;
-        
+
         setIsPurchasing(true);
         const result = await createOrderAction(selectedProduct.id, 1);
         setIsPurchasing(false);
 
         if (result.error) {
-            alert(`ไม่สามารถซื้อสินค้าได้: ${result.error}`);
+            Swal.fire({
+                icon: "error",
+                title: "ซื้อสินค้าไม่สำเร็จ",
+                text: result.error,
+                background: "#1e1e2d",
+                color: "#fff",
+                confirmButtonColor: "#ef4444",
+                confirmButtonText: "ตกลง",
+                customClass: { popup: 'rounded-2xl border border-red-500/20 shadow-2xl shadow-red-500/10' }
+            });
         } else {
-            alert("✅ สั่งซื้อสินค้าสำเร็จ! สามารถดูบัญชีสินค้าได้ที่หน้าโปรไฟล์");
-            router.push("/profile");
-            router.refresh();
+            Swal.fire({
+                icon: "success",
+                title: "สั่งซื้อสำเร็จ!",
+                text: "รับข้อมูลบัญชีได้ที่หน้าประวัติการสั่งซื้อ",
+                background: "#1e1e2d",
+                color: "#fff",
+                confirmButtonColor: "#3b82f6",
+                confirmButtonText: "ดูบัญชีผู้ใช้",
+                customClass: { popup: 'rounded-2xl border border-blue-500/20 shadow-2xl shadow-blue-500/10' }
+            }).then(() => {
+                router.push("/profile");
+                router.refresh();
+            });
         }
     };
 
@@ -259,12 +279,12 @@ export default function ProductClient({ allProducts }: { allProducts: Product[] 
                                 </div>
 
                                 {/* Buy button */}
-                                <button 
+                                <button
                                     onClick={handlePurchase}
                                     disabled={isPurchasing}
                                     className={`w-full mt-5 py-3.5 rounded-xl text-sm font-bold shadow-[0_4px_15px_rgba(59,130,246,0.3)] transition-all cursor-pointer text-white
-                                        ${isPurchasing 
-                                            ? "bg-blue-800 opacity-70 cursor-not-allowed" 
+                                        ${isPurchasing
+                                            ? "bg-blue-800 opacity-70 cursor-not-allowed"
                                             : "bg-gradient-to-r from-blue-500 to-blue-700 hover:shadow-[0_6px_20px_rgba(59,130,246,0.4)] hover:-translate-y-0.5 active:scale-95"}`}
                                 >
                                     {isPurchasing ? "กำลังสั่งซื้อ..." : `ชำระเงิน ฿${parseFloat(selectedProduct.retailPrice).toFixed(0)}`}

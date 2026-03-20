@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     apple: "/logo.png",
   },
   verification: {
-    google: "I8-c7XyyB-kCcnM7wzXvl4lOFFtvque0GKaxGdrAkDo",
+    google: "otCDcvsnLkzfCIxCyErpkPCK81vbyakWRchcJu7iDZs",
   },
 };
 
@@ -60,16 +60,16 @@ async function getUser() {
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
   if (!token) return null;
-  
+
   try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'}/auth/profile`, {
-          headers: { Authorization: `Bearer ${token}` },
-          cache: 'no-store'
-      });
-      if (res.ok) return await res.json();
-      return null;
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'}/auth/profile`, {
+      headers: { Authorization: `Bearer ${token}` },
+      cache: 'no-store'
+    });
+    if (res.ok) return await res.json();
+    return null;
   } catch {
-      return null;
+    return null;
   }
 }
 

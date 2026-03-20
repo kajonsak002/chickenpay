@@ -13,14 +13,14 @@ export default function TopupClient() {
     const [amount, setAmount] = useState<string>("");
     const [qrCodeData, setQrCodeData] = useState<string | null>(null);
     const [isGenerating, setIsGenerating] = useState(false);
-    
+
     // Slip Upload States
     const [slipFile, setSlipFile] = useState<File | null>(null);
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
     const [isUploading, setIsUploading] = useState(false);
 
     // TODO: เปลี่ยนเบอร์พร้อมเพย์ที่นี่ (ใส่เป็นเบอร์มือถือ 10 หลัก หรือเลขบัตรประชาชน 13 หลัก)
-    const PROMPTPAY_ID = "0800000000";
+    const PROMPTPAY_ID = "0651209830";
 
     const handleGenerate = () => {
         const amt = parseFloat(amount);
@@ -105,7 +105,7 @@ export default function TopupClient() {
             {/* Main Card */}
             <div className="w-full max-w-xl bg-[#0a0a14] rounded-3xl border border-white/5 shadow-[0_8px_40px_rgba(0,0,0,0.5)] p-6 sm:p-10 relative overflow-hidden">
                 <div className="absolute top-[-50%] left-[50%] -translate-x-1/2 w-[80%] h-[100%] rounded-full bg-orange-500/5 blur-[80px] pointer-events-none" />
-                
+
                 <div className="relative z-10 flex flex-col gap-6">
                     {/* Amount Input */}
                     <div>
@@ -180,7 +180,7 @@ export default function TopupClient() {
             {/* Scan QR & Upload Section */}
             {qrCodeData && (
                 <div className="w-full max-w-sm mt-8 animate-in slide-in-from-bottom-10 fade-in duration-500 space-y-4">
-                    
+
                     {/* QR Code Card */}
                     <div className="bg-white rounded-3xl p-8 shadow-2xl relative overflow-hidden group border-4 border-white/20">
                         <div className="flex justify-center mb-6">
@@ -191,9 +191,9 @@ export default function TopupClient() {
                         </div>
 
                         <div className="flex justify-center mb-6 bg-white border-2 border-dashed border-gray-200 p-2 rounded-xl">
-                            <QRCodeSVG 
-                                value={qrCodeData} 
-                                size={220} 
+                            <QRCodeSVG
+                                value={qrCodeData}
+                                size={220}
                                 level="M"
                                 includeMargin={false}
                                 bgColor={"#ffffff"}
@@ -207,17 +207,17 @@ export default function TopupClient() {
                                 ฿{parseFloat(amount).toFixed(2)}
                             </p>
                         </div>
-                        
+
                         <div className="bg-[#133F6E]/5 rounded-xl p-4 mt-6 text-center">
                             <p className="text-sm font-bold text-[#133F6E]">ชื่อบัญชี: บจก. ชิกเก้นเพย์ (จำลอง)</p>
-                            <p className="text-xs text-gray-500 font-medium mt-1">รหัสอ้างอิง: REF{(Math.random()*1000000).toFixed(0)}</p>
+                            <p className="text-xs text-gray-500 font-medium mt-1">รหัสอ้างอิง: REF{(Math.random() * 1000000).toFixed(0)}</p>
                         </div>
                     </div>
 
                     {/* Upload Slip Validation Box */}
                     <div className="bg-[#13131f] rounded-3xl p-6 border border-white/10 shadow-xl">
                         <h3 className="text-lg font-bold text-white mb-4 text-center">แนบสลิปเพื่อยืนยันการชำระเงิน</h3>
-                        
+
                         <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-white/20 rounded-2xl cursor-pointer hover:bg-white/5 hover:border-orange-500/50 transition-all relative overflow-hidden">
                             {previewUrl ? (
                                 <img src={previewUrl} alt="Slip preview" className="absolute inset-0 w-full h-full object-cover opacity-60" />
@@ -236,7 +236,7 @@ export default function TopupClient() {
                                 แนบไฟล์สำเร็จแล้ว
                             </p>
                         )}
-                        
+
                         <div className="flex gap-3 mt-5">
                             <button
                                 onClick={cancelTransaction}
@@ -251,7 +251,7 @@ export default function TopupClient() {
                                 className="flex-1 py-3 rounded-xl bg-[#22c55e] text-white font-bold text-sm shadow-[0_4px_20px_rgba(34,197,94,0.3)] hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:grayscale flex items-center justify-center gap-2"
                             >
                                 {isUploading ? (
-                                     <>
+                                    <>
                                         <svg className="animate-spin -ml-1 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
                                             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                                             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>

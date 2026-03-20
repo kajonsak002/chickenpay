@@ -64,10 +64,10 @@ export default async function ProfilePage() {
         redirect("/login");
     }
 
-    const profile: UserProfile = await profileRes.json();
-    const wallet: Wallet = await walletRes.json();
-    const orders: Order[] = await ordersRes.json();
-    const topups = await topupsRes.json().catch(() => []);
+    const profile: UserProfile = profileRes.ok ? await profileRes.json() : null;
+    const wallet: Wallet = walletRes.ok ? await walletRes.json() : null;
+    const orders: Order[] = ordersRes.ok ? await ordersRes.json() : [];
+    const topups = topupsRes.ok ? await topupsRes.json().catch(() => []) : [];
 
     return (
         <main className="bg-[var(--bg-primary)] min-h-screen flex flex-col">
@@ -81,7 +81,7 @@ export default async function ProfilePage() {
                         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-6 shadow-lg">
                             <div className="flex items-center gap-4 mb-6">
                                 <div className="w-16 h-16 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center text-white text-2xl font-bold font-sans shadow-lg shadow-orange-500/30">
-                                    {profile?.email?.charAt(0).toUpperCase()}
+                                    {(profile?.email?.[0] || "?").toUpperCase()}
                                 </div>
                                 <div>
                                     <h2 className="text-[var(--text-primary)] font-bold text-lg truncate max-w-[200px]">{profile?.email}</h2>
@@ -106,7 +106,7 @@ export default async function ProfilePage() {
                             </div>
 
                             <div className="text-4xl font-bold text-white tracking-tight mb-6">
-                                ฿{wallet ? parseFloat(wallet.balance.toString()).toFixed(2) : "0.00"}
+                                ฿{wallet?.balance !== undefined ? parseFloat(wallet.balance.toString()).toFixed(2) : "0.00"}
                             </div>
 
                             <div className="flex gap-3">

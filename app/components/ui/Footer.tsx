@@ -131,27 +131,45 @@ export default function Footer() {
                         </ul>
                     </div>
 
-                    {/* Payment & Contact */}
+                    {/* Account Links */}
                     <div>
                         <h4 className="text-orange-400 text-sm font-bold uppercase tracking-wider mb-5 flex items-center gap-2">
                             <span className="w-1.5 h-1.5 bg-orange-500 rounded-full" />
-                            ช่องทางชำระเงิน
+                            บัญชีของฉัน
                         </h4>
-                        <div className="grid grid-cols-2 gap-2 mb-6">
-                            {["PromptPay", "TrueMoney", "Visa", "MasterCard", "QR Code", "Mobile Banking"].map((method) => (
-                                <div
-                                    key={method}
-                                    className="px-3 py-2 rounded-xl bg-[var(--text-primary)]/5 border border-[var(--border-primary)]
-                    text-[11px] text-[var(--text-secondary)] text-center font-medium
-                    hover:border-[var(--brand)]/30 hover:text-[var(--brand)] hover:bg-[var(--brand)]/5
-                    transition-all duration-300 cursor-default"
-                                >
-                                    {method}
-                                </div>
-                            ))}
-                        </div>
-
-
+                        <ul className="space-y-3">
+                            {isLoggedIn ? (
+                                <>
+                                    <li>
+                                        <a href="/profile" className="group flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-[var(--brand)] transition-all duration-300">
+                                            <span className="w-0 group-hover:w-2 h-px bg-orange-500 transition-all duration-300" />
+                                            โปรไฟล์ของฉัน
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/topup" className="group flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-[var(--brand)] transition-all duration-300">
+                                            <span className="w-0 group-hover:w-2 h-px bg-orange-500 transition-all duration-300" />
+                                            เติมเงิน
+                                        </a>
+                                    </li>
+                                </>
+                            ) : (
+                                <>
+                                    <li>
+                                        <a href="/login" className="group flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-[var(--brand)] transition-all duration-300">
+                                            <span className="w-0 group-hover:w-2 h-px bg-orange-500 transition-all duration-300" />
+                                            เข้าสู่ระบบ
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/register" className="group flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-[var(--brand)] transition-all duration-300">
+                                            <span className="w-0 group-hover:w-2 h-px bg-orange-500 transition-all duration-300" />
+                                            สมัครสมาชิก
+                                        </a>
+                                    </li>
+                                </>
+                            )}
+                        </ul>
                     </div>
                 </div>
 

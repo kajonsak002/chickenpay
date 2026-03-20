@@ -9,8 +9,18 @@ const navLinks = [
     { label: "ติดต่อเรา", href: "#contact" },
 ];
 
-export default function NavbarClient() {
-    const { isLoggedIn, isAdmin } = useAuth();
+export default function NavbarClient({
+    isLoggedIn: propIsLoggedIn,
+    isAdmin: propIsAdmin
+}: {
+    isLoggedIn?: boolean;
+    isAdmin?: boolean;
+}) {
+    const auth = useAuth();
+
+    // Use props if provided (from Server Component), otherwise fallback to Context
+    const isLoggedIn = propIsLoggedIn ?? auth.isLoggedIn;
+    const isAdmin = propIsAdmin ?? auth.isAdmin;
     const [menuOpen, setMenuOpen] = useState(false);
 
     return (

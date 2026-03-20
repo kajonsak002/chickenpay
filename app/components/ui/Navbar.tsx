@@ -25,5 +25,5 @@ export default async function Navbar() {
         }
     }
 
-    return <NavbarClient />;
+    return <NavbarClient isLoggedIn={isLoggedIn} isAdmin={isAdmin} />;
 }

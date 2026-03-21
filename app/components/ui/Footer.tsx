@@ -1,6 +1,8 @@
 "use client";
 
 import { useAuth } from "../../contexts/AuthContext";
+import Link from "next/link";
+import { Facebook, Twitter, Youtube, MessageCircle, Gamepad2 } from "lucide-react";
 
 export default function Footer() {
     const { isLoggedIn } = useAuth();
@@ -50,7 +52,7 @@ export default function Footer() {
                         <div className="flex items-center gap-2.5 mb-5">
                             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-orange-600
                 flex items-center justify-center shadow-lg shadow-orange-500/20">
-                                <span className="text-lg">🐔</span>
+                                <span className="text-lg" aria-hidden="true">🐔</span>
                             </div>
                             <span className="text-xl font-bold text-[var(--text-primary)] tracking-tight">
                                 Chicken<span className="text-orange-400">Pay</span>
@@ -63,24 +65,10 @@ export default function Footer() {
 
                         {/* Social Icons */}
                         <div className="flex gap-2.5">
-                            {[
-                                { icon: "f", label: "Facebook", color: "hover:bg-blue-600 hover:border-blue-500/50" },
-                                { icon: "𝕏", label: "X", color: "hover:bg-gray-700 hover:border-gray-600/50" },
-                                { icon: "▶", label: "YouTube", color: "hover:bg-red-600 hover:border-red-500/50" },
-                                { icon: "💬", label: "Line", color: "hover:bg-green-600 hover:border-green-500/50" },
-                            ].map((s) => (
-                                <a
-                                    key={s.label}
-                                    href="#"
-                                    title={s.label}
-                                    className={`w-9 h-9 rounded-xl bg-[var(--text-primary)]/5 border border-[var(--border-primary)]
-                    flex items-center justify-center text-[var(--text-secondary)] text-sm
-                    ${s.color} hover:text-white
-                    transition-all duration-300 hover:scale-110 hover:shadow-lg`}
-                                >
-                                    {s.icon}
-                                </a>
-                            ))}
+                            <a href="#" className="w-9 h-9 rounded-xl bg-[var(--text-primary)]/5 border border-[var(--border-primary)] flex items-center justify-center text-[var(--text-secondary)] hover:bg-blue-600 hover:border-blue-500/50 hover:text-white transition-all duration-300 hover:scale-110 hover:shadow-lg"><Facebook size={18} /></a>
+                            <a href="#" className="w-9 h-9 rounded-xl bg-[var(--text-primary)]/5 border border-[var(--border-primary)] flex items-center justify-center text-[var(--text-secondary)] hover:bg-gray-700 hover:border-gray-600/50 hover:text-white transition-all duration-300 hover:scale-110 hover:shadow-lg"><Twitter size={18} /></a>
+                            <a href="#" className="w-9 h-9 rounded-xl bg-[var(--text-primary)]/5 border border-[var(--border-primary)] flex items-center justify-center text-[var(--text-secondary)] hover:bg-red-600 hover:border-red-500/50 hover:text-white transition-all duration-300 hover:scale-110 hover:shadow-lg"><Youtube size={18} /></a>
+                            <a href="#" className="w-9 h-9 rounded-xl bg-[var(--text-primary)]/5 border border-[var(--border-primary)] flex items-center justify-center text-[var(--text-secondary)] hover:bg-green-600 hover:border-green-500/50 hover:text-white transition-all duration-300 hover:scale-110 hover:shadow-lg"><MessageCircle size={18} /></a>
                         </div>
                     </div>
 
@@ -98,10 +86,10 @@ export default function Footer() {
                                 { label: "ประวัติการสั่งซื้อ", href: "/profile" }
                             ].map((item) => (
                                 <li key={item.label}>
-                                    <a href={item.href} className="group flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-[var(--brand)] transition-all duration-300">
+                                    <Link href={item.href} className="group flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-orange-500 transition-all duration-300">
                                         <span className="w-0 group-hover:w-2 h-px bg-orange-500 transition-all duration-300" />
                                         {item.label}
-                                    </a>
+                                    </Link>
                                 </li>
                             ))}
                         </ul>
@@ -119,13 +107,13 @@ export default function Footer() {
                                 { label: "วิธีชำระเงิน", href: "#" },
                                 { label: "ตรวจสอบออเดอร์", href: "/profile" },
                                 { label: "ติดต่อเรา", href: "/contact" },
-                                { label: "นโยบายความเป็นส่วนตัว", href: "#" }
+                                { label: "นโยบายความเป็นส่วนตัว", href: "/policy" }
                             ].map((item) => (
                                 <li key={item.label}>
-                                    <a href={item.href} className="group flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-[var(--brand)] transition-all duration-300">
+                                    <Link href={item.href} className="group flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-orange-500 transition-all duration-300">
                                         <span className="w-0 group-hover:w-2 h-px bg-orange-500 transition-all duration-300" />
                                         {item.label}
-                                    </a>
+                                    </Link>
                                 </li>
                             ))}
                         </ul>
@@ -141,31 +129,31 @@ export default function Footer() {
                             {isLoggedIn ? (
                                 <>
                                     <li>
-                                        <a href="/profile" className="group flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-[var(--brand)] transition-all duration-300">
+                                        <Link href="/profile" className="group flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-orange-500 transition-all duration-300">
                                             <span className="w-0 group-hover:w-2 h-px bg-orange-500 transition-all duration-300" />
                                             โปรไฟล์ของฉัน
-                                        </a>
+                                        </Link>
                                     </li>
                                     <li>
-                                        <a href="/topup" className="group flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-[var(--brand)] transition-all duration-300">
+                                        <Link href="/topup" className="group flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-orange-500 transition-all duration-300">
                                             <span className="w-0 group-hover:w-2 h-px bg-orange-500 transition-all duration-300" />
                                             เติมเงิน
-                                        </a>
+                                        </Link>
                                     </li>
                                 </>
                             ) : (
                                 <>
                                     <li>
-                                        <a href="/login" className="group flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-[var(--brand)] transition-all duration-300">
+                                        <Link href="/login" className="group flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-orange-500 transition-all duration-300">
                                             <span className="w-0 group-hover:w-2 h-px bg-orange-500 transition-all duration-300" />
                                             เข้าสู่ระบบ
-                                        </a>
+                                        </Link>
                                     </li>
                                     <li>
-                                        <a href="/register" className="group flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-[var(--brand)] transition-all duration-300">
+                                        <Link href="/register" className="group flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-orange-500 transition-all duration-300">
                                             <span className="w-0 group-hover:w-2 h-px bg-orange-500 transition-all duration-300" />
                                             สมัครสมาชิก
-                                        </a>
+                                        </Link>
                                     </li>
                                 </>
                             )}

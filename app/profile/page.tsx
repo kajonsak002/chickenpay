@@ -5,6 +5,8 @@ import Footer from "../components/ui/Footer";
 import Breadcrumb from "../components/ui/Breadcrumb";
 import { logoutAction } from "../actions/auth";
 import HistoryTabs from "./HistoryTabs";
+import Link from "next/link";
+import { Wallet as WalletIcon } from "lucide-react";
 
 interface UserProfile {
     id: string;
@@ -101,9 +103,7 @@ export default async function ProfilePage() {
 
                             <div className="flex items-center justify-between mb-2">
                                 <h3 className="text-gray-400 text-sm font-medium">ยอดเงินคงเหลือ (฿)</h3>
-                                <svg className="w-6 h-6 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-                                </svg>
+                                <WalletIcon className="w-6 h-6 text-orange-400" />
                             </div>
 
                             <div className="text-4xl font-bold text-white tracking-tight mb-6">
@@ -111,9 +111,9 @@ export default async function ProfilePage() {
                             </div>
 
                             <div className="flex gap-3">
-                                <a href="/topup" className="flex-1 bg-orange-500 hover:bg-orange-600 text-white text-center text-sm font-bold py-2.5 rounded-xl transition-colors shadow-lg shadow-orange-500/20">
+                                <Link href="/topup" className="flex-1 bg-orange-500 hover:bg-orange-600 text-white text-center text-sm font-bold py-2.5 rounded-xl transition-colors shadow-lg shadow-orange-500/20">
                                     เติมเงิน
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </div>

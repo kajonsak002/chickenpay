@@ -1,12 +1,14 @@
 import { MetadataRoute } from 'next';
 
 export default function robots(): MetadataRoute.Robots {
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://chickenpay.com';
+
   return {
     rules: {
       userAgent: '*',
       allow: '/',
       disallow: ['/admin/', '/api/'],
     },
-    sitemap: 'https://chickenpay-dev.up.railway.app/sitemap.xml', // Change this domain to the real one later
+    sitemap: `${baseUrl}/sitemap.xml`,
   }
 }

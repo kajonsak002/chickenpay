@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import Image from "next/image";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface BannerSlide {
     id: number;
@@ -118,10 +120,13 @@ export default function Banner({
                         >
                             {/* Image */}
                             <div className="relative aspect-[21/9] w-full">
-                                <img
+                                <Image
                                     src={slide.image}
                                     alt={slide.title}
-                                    className="w-full h-full object-cover"
+                                    fill
+                                    className="object-cover"
+                                    priority={position === "center"}
+                                    sizes="(max-width: 768px) 70vw, 55vw"
                                     draggable={false}
                                 />
                                 {/* Gradient Overlay — only on center */}
@@ -154,47 +159,45 @@ export default function Banner({
             <button
                 onClick={goPrev}
                 className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-40
-          w-10 h-10 sm:w-12 sm:h-12 rounded-full
+          w-11 h-11 sm:w-12 sm:h-12 rounded-full
           bg-black/40 backdrop-blur-sm border border-white/10
           text-white flex items-center justify-center
           hover:bg-white/20 hover:scale-110
           transition-all duration-300 cursor-pointer"
                 aria-label="Previous slide"
             >
-                <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
+                <ChevronLeft size={24} />
             </button>
             <button
                 onClick={goNext}
                 className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-40
-          w-10 h-10 sm:w-12 sm:h-12 rounded-full
+          w-11 h-11 sm:w-12 sm:h-12 rounded-full
           bg-black/40 backdrop-blur-sm border border-white/10
           text-white flex items-center justify-center
           hover:bg-white/20 hover:scale-110
           transition-all duration-300 cursor-pointer"
                 aria-label="Next slide"
             >
-                <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
+                <ChevronRight size={24} />
             </button>
 
-            {/* Dot Indicators */}
-            <div className="flex justify-center gap-2 mt-4 sm:mt-6">
+            {/* Dot Indicators - Touch Area >= 44x44 */}
+            <div className="flex justify-center flex-wrap mt-4 sm:mt-6">
                 {slides.map((_, index) => (
                     <button
                         key={index}
                         onClick={() => goTo(index)}
-                        className={`
-              h-2 rounded-full transition-all duration-300 cursor-pointer
-              ${index === current
-                                ? "w-8 bg-[var(--brand)]"
-                                : "w-2 bg-white/30 hover:bg-white/50"
-                            }
-            `}
+                        className="p-3 mx-1 group cursor-pointer"
                         aria-label={`Go to slide ${index + 1}`}
-                    />
+                    >
+                        <div className={`
+                            h-2 rounded-full transition-all duration-300
+                            ${index === current
+                                ? "w-8 bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.8)]"
+                                : "w-2 bg-white/30 group-hover:bg-white/50"
+                            }
+                        `} />
+                    </button>
                 ))}
             </div>
         </div>

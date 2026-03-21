@@ -1,6 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { PackageX, Lightbulb, Check } from "lucide-react";
 import Breadcrumb from "../../components/ui/Breadcrumb";
 import { useParams, useRouter } from "next/navigation";
 import { Product } from "../../lib/products";
@@ -59,12 +62,12 @@ export default function ProductClient({ allProducts }: { allProducts: Product[] 
     if (products.length === 0) {
         return (
             <div className="max-w-5xl mx-auto px-4 py-20 text-center">
-                <p className="text-5xl mb-4">😔</p>
+                <PackageX size={64} className="text-orange-500/50 mb-4 mx-auto" />
                 <h1 className="text-[var(--text-primary)] text-2xl font-bold mb-2">ไม่พบสินค้า</h1>
                 <p className="text-[var(--text-secondary)] text-sm mb-6">ไม่พบหมวดหมู่ &quot;{category}&quot;</p>
-                <a href="/apps" className="text-orange-400 hover:text-orange-300 text-sm underline">
+                <Link href="/apps" className="text-orange-400 hover:text-orange-300 text-sm underline transition-colors">
                     กลับไปหน้าแอปพรีเมียม
-                </a>
+                </Link>
             </div>
         );
     }
@@ -81,15 +84,17 @@ export default function ProductClient({ allProducts }: { allProducts: Product[] 
                 {/* Left — App card */}
                 <div>
                     <div className="relative rounded-2xl overflow-hidden bg-[var(--bg-secondary)] shadow-2xl shadow-black/50 p-10 border border-[var(--border-primary)]">
-                        <div className="absolute inset-0 bg-blue-500/5 pointer-events-none" />
-                        <img
-                            src={firstProduct.img}
-                            alt={category}
-                            className="w-full aspect-square object-contain drop-shadow-[0_8px_30px_rgba(59,130,246,0.2)] relative z-10"
-                            onError={(e) => {
-                                (e.target as HTMLImageElement).src = `https://placehold.co/300x300/151522/3b82f6?text=${encodeURIComponent(category)}&font=roboto`;
-                            }}
-                        />
+                        <div className="absolute inset-0 bg-orange-500/5 pointer-events-none" />
+                        <div className="relative aspect-square w-full">
+                            <Image
+                                src={firstProduct.img}
+                                alt={category}
+                                fill
+                                priority
+                                sizes="(max-width: 768px) 300px, 240px"
+                                className="object-contain drop-shadow-[0_8px_30px_rgba(249,115,22,0.15)] relative z-10"
+                            />
+                        </div>
                     </div>
 
                     {/* Info card */}
@@ -115,9 +120,9 @@ export default function ProductClient({ allProducts }: { allProducts: Product[] 
                         </div>
 
                         {/* Price range */}
-                        <div className="mt-3 p-3.5 rounded-xl bg-blue-500/5 border border-blue-500/10">
+                        <div className="mt-3 p-3.5 rounded-xl bg-orange-500/5 border border-orange-500/10">
                             <p className="text-[11px] text-[var(--text-secondary)] mb-1">ช่วงราคา</p>
-                            <p className="text-blue-500 font-bold text-base">
+                            <p className="text-orange-500 font-bold text-base drop-shadow-[0_0_8px_rgba(249,115,22,0.5)]">
                                 ฿{Math.min(...products.map((p) => parseFloat(p.retailPrice))).toFixed(0)} — ฿{Math.max(...products.map((p) => parseFloat(p.retailPrice))).toFixed(0)}
                             </p>
                         </div>
@@ -146,16 +151,16 @@ export default function ProductClient({ allProducts }: { allProducts: Product[] 
                                             onClick={() => setSelected(product.id)}
                                             className={`w-full text-left p-4 rounded-xl border transition-all duration-300 cursor-pointer group relative overflow-hidden
                       ${isSelected
-                                                    ? "bg-blue-500/10 border-blue-500/50 shadow-[0_4px_20px_rgba(59,130,246,0.1)]"
-                                                    : "bg-[var(--bg-secondary)] border-[var(--border-primary)] hover:border-blue-500/30 hover:shadow-[0_4px_15px_rgba(59,130,246,0.05)] hover:-translate-y-0.5"
+                                                    ? "bg-orange-500/10 border-orange-500/50 shadow-[0_4px_20px_rgba(249,115,22,0.1)]"
+                                                    : "bg-[var(--bg-secondary)] border-[var(--border-primary)] hover:border-orange-500/30 hover:shadow-[0_4px_15px_rgba(249,115,22,0.05)] hover:-translate-y-0.5"
                                                 }`}
                                         >
                                             {/* Selection Indicator glow */}
-                                            {isSelected && <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-transparent pointer-events-none" />}
+                                            {isSelected && <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 to-transparent pointer-events-none" />}
 
                                             <div className="flex items-center justify-between relative z-10">
                                                 <div className="flex-1 min-w-0 mr-3">
-                                                    <p className={`text-sm font-bold transition-colors ${isSelected ? "text-blue-500" : "text-[var(--text-primary)] group-hover:text-blue-400"}`}>
+                                                    <p className={`text-sm font-bold transition-colors ${isSelected ? "text-orange-500" : "text-[var(--text-primary)] group-hover:text-orange-400"}`}>
                                                         {product.name}
                                                     </p>
                                                     <div className="flex items-center gap-2 mt-2">
@@ -165,7 +170,7 @@ export default function ProductClient({ allProducts }: { allProducts: Product[] 
                                                     </div>
                                                 </div>
                                                 <div className="text-right flex-shrink-0">
-                                                    <p className={`text-lg font-bold transition-colors ${isSelected ? "text-blue-500" : "text-[var(--text-primary)]"}`}>
+                                                    <p className={`text-lg font-bold transition-colors ${isSelected ? "text-orange-500" : "text-[var(--text-primary)]"}`}>
                                                         ฿{retailPrice.toFixed(0)}
                                                     </p>
                                                 </div>
@@ -174,14 +179,10 @@ export default function ProductClient({ allProducts }: { allProducts: Product[] 
                                             {/* Selection indicator & details */}
                                             <div className="flex items-center gap-2 mt-3 relative z-10">
                                                 <div className={`w-4 h-4 rounded-full border-[1.5px] flex items-center justify-center transition-all duration-300
-                        ${isSelected ? "border-blue-500 bg-blue-500" : "border-[var(--text-muted)] group-hover:border-blue-500/50"}`}>
-                                                    {isSelected && (
-                                                        <svg className="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                                                        </svg>
-                                                    )}
+                        ${isSelected ? "border-orange-500 bg-orange-500" : "border-[var(--text-muted)] group-hover:border-orange-500/50"}`}>
+                                                    {isSelected && <Check size={10} className="text-white" strokeWidth={3} />}
                                                 </div>
-                                                <span className={`text-[10px] font-medium transition-colors ${isSelected ? "text-blue-500" : "text-[var(--text-muted)]"}`}>
+                                                <span className={`text-[10px] font-medium transition-colors ${isSelected ? "text-orange-500" : "text-[var(--text-muted)]"}`}>
                                                     ID: #{product.id}
                                                 </span>
                                             </div>
@@ -232,14 +233,14 @@ export default function ProductClient({ allProducts }: { allProducts: Product[] 
 
                     {/* Order section */}
                     {selectedProduct && (
-                        <div className="mt-6 p-5 rounded-2xl bg-[var(--bg-secondary)] border border-[var(--border-primary)] shadow-[0_8px_30px_rgba(59,130,246,0.08)] sticky bottom-4 z-99">
+                        <div className="mt-6 p-5 rounded-2xl bg-[var(--bg-secondary)] border border-[var(--border-primary)] shadow-[0_8px_30px_rgba(249,115,22,0.08)] sticky bottom-4">
                             <h3 className="text-[var(--text-primary)] font-bold mb-4 flex items-center gap-2">
-                                <span className="w-1.5 h-5 bg-blue-500 rounded-full hidden sm:block"></span>
+                                <span className="w-1.5 h-5 bg-orange-500 rounded-full hidden sm:block"></span>
                                 สั่งซื้อสินค้า
                             </h3>
 
                             {/* Summary */}
-                            <div className="p-4 rounded-xl bg-blue-500/5 border border-blue-500/10 mb-4">
+                            <div className="p-4 rounded-xl bg-orange-500/5 border border-orange-500/10 mb-4">
                                 <div className="flex justify-between items-center mb-2.5">
                                     <span className="text-[var(--text-secondary)] text-sm">สินค้า</span>
                                     <span className="text-[var(--text-primary)] text-sm font-medium truncate max-w-[220px]">
@@ -254,7 +255,7 @@ export default function ProductClient({ allProducts }: { allProducts: Product[] 
                                 </div>
                                 <div className="flex justify-between items-center border-t border-[var(--border-primary)] pt-3">
                                     <span className="text-[var(--text-secondary)] text-sm">ราคา</span>
-                                    <span className="text-blue-500 text-xl font-bold">
+                                    <span className="text-orange-500 text-xl font-bold drop-shadow-[0_0_8px_rgba(249,115,22,0.5)]">
                                         ฿{parseFloat(selectedProduct.retailPrice).toFixed(0)}
                                     </span>
                                 </div>
@@ -263,7 +264,7 @@ export default function ProductClient({ allProducts }: { allProducts: Product[] 
                             {/* Note */}
                             <div className="p-3.5 rounded-xl bg-[var(--bg-tertiary)] border border-[var(--border-primary)] shadow-sm">
                                 <p className="text-[11px] text-[var(--text-secondary)] font-medium flex items-start gap-2">
-                                    <span className="text-blue-500 text-base leading-none">💡</span>
+                                    <Lightbulb size={16} className="text-orange-500 flex-shrink-0 mt-0.5" />
                                     <span>หลังชำระเงิน ระบบจะส่ง <span className="text-[var(--text-primary)]">Email/Password</span> ให้อัตโนมัติในส่วนของประวัติการสั่งซื้อ</span>
                                 </p>
                             </div>
@@ -272,10 +273,10 @@ export default function ProductClient({ allProducts }: { allProducts: Product[] 
                             <button
                                 onClick={handlePurchase}
                                 disabled={isPurchasing}
-                                className={`w-full mt-5 py-3.5 rounded-xl text-sm font-bold shadow-[0_4px_15px_rgba(59,130,246,0.3)] transition-all cursor-pointer text-white
+                                className={`w-full mt-5 py-3.5 rounded-xl text-sm font-bold shadow-[0_4px_15px_rgba(249,115,22,0.3)] transition-all cursor-pointer text-white
                                     ${isPurchasing
-                                        ? "bg-blue-800 opacity-70 cursor-not-allowed"
-                                        : "bg-gradient-to-r from-blue-500 to-blue-700 hover:shadow-[0_6px_20px_rgba(59,130,246,0.4)] hover:-translate-y-0.5 active:scale-95"}`}
+                                        ? "bg-orange-800 opacity-70 cursor-not-allowed"
+                                        : "bg-gradient-to-r from-orange-500 to-orange-600 hover:shadow-[0_6px_20px_rgba(249,115,22,0.4)] hover:-translate-y-0.5 active:scale-95"}`}
                             >
                                 {isPurchasing ? "กำลังสั่งซื้อ..." : `ชำระเงิน ฿${parseFloat(selectedProduct.retailPrice).toFixed(0)}`}
                             </button>

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Breadcrumb from "../components/ui/Breadcrumb";
 import Swal from "sweetalert2";
+import { MessageCircle, Facebook, Mail, Loader2, Send } from "lucide-react";
 
 export default function ContactClient() {
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -10,7 +11,7 @@ export default function ContactClient() {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setIsSubmitting(true);
-        
+
         // Mock submission
         setTimeout(() => {
             setIsSubmitting(false);
@@ -29,11 +30,7 @@ export default function ContactClient() {
 
     const contactMethods = [
         {
-            icon: (
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2C6.48 2 2 6.48 2 12c0 5.52 4.48 10 10 10s10-4.48 10-10c0-5.52-4.48-10-10-10zm4.5 14H7.5v-1.5h9V16zm0-2.5H7.5v-1.5h9V13.5zm0-2.5h-9V9.5h9V11z" />
-                </svg>
-            ),
+            icon: <MessageCircle className="w-6 h-6" />,
             label: "Line Official",
             value: "@chickenpay",
             href: "#",
@@ -41,11 +38,7 @@ export default function ContactClient() {
             shadow: "shadow-green-500/20"
         },
         {
-            icon: (
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-                </svg>
-            ),
+            icon: <Facebook className="w-6 h-6" />,
             label: "Facebook Page",
             value: "ChickenPay - แอปพรีเมียมราคาถูก",
             href: "#",
@@ -53,11 +46,7 @@ export default function ContactClient() {
             shadow: "shadow-blue-500/20"
         },
         {
-            icon: (
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-            ),
+            icon: <Mail className="w-6 h-6" />,
             label: "Email Support",
             value: "support@chickenpay.com",
             href: "mailto:support@chickenpay.com",
@@ -96,7 +85,7 @@ export default function ContactClient() {
                             <span className="w-1.5 h-6 bg-orange-500 rounded-full" />
                             ช่องทางติดต่อหลัก
                         </h2>
-                        
+
                         {contactMethods.map((method, idx) => (
                             <a
                                 key={idx}
@@ -149,24 +138,24 @@ export default function ContactClient() {
                                     <div className="grid sm:grid-cols-2 gap-6">
                                         <div className="space-y-2">
                                             <label className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider ml-1">ชื่อของคุณ</label>
-                                            <input 
+                                            <input
                                                 required
-                                                type="text" 
+                                                type="text"
                                                 placeholder="สมชาย ไก่เพลย์"
                                                 className="w-full px-5 py-4 rounded-2xl bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[var(--text-primary)] focus:outline-none focus:border-orange-500/50 focus:ring-4 focus:ring-orange-500/5 transition-all outline-none"
                                             />
                                         </div>
                                         <div className="space-y-2">
                                             <label className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider ml-1">อีเมลติดต่อ</label>
-                                            <input 
+                                            <input
                                                 required
-                                                type="email" 
+                                                type="email"
                                                 placeholder="somchai@example.com"
                                                 className="w-full px-5 py-4 rounded-2xl bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[var(--text-primary)] focus:outline-none focus:border-orange-500/50 focus:ring-4 focus:ring-orange-500/5 transition-all outline-none"
                                             />
                                         </div>
                                     </div>
-                                    
+
                                     <div className="space-y-2">
                                         <label className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider ml-1">หัวเรื่อง</label>
                                         <select className="w-full px-5 py-4 rounded-2xl bg-[var(--bg-primary)] border border-[var(--border-primary)] text-[var(--text-primary)] focus:outline-none focus:border-orange-500/50 transition-all outline-none appearance-none">
@@ -180,7 +169,7 @@ export default function ContactClient() {
 
                                     <div className="space-y-2">
                                         <label className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider ml-1">รายละเอียด</label>
-                                        <textarea 
+                                        <textarea
                                             required
                                             rows={4}
                                             placeholder="พิมพ์ข้อความที่คุณต้องการติดต่อเราที่นี่..."
@@ -188,28 +177,23 @@ export default function ContactClient() {
                                         />
                                     </div>
 
-                                    <button 
+                                    <button
                                         type="submit"
                                         disabled={isSubmitting}
                                         className={`w-full py-4 rounded-2xl text-white font-bold text-base shadow-xl transition-all relative overflow-hidden group
-                                            ${isSubmitting 
-                                                ? "bg-orange-800 cursor-not-allowed opacity-70" 
+                                            ${isSubmitting
+                                                ? "bg-orange-800 cursor-not-allowed opacity-70"
                                                 : "bg-gradient-to-r from-orange-500 to-orange-600 hover:shadow-orange-500/40 hover:-translate-y-1 active:scale-95"}`}
                                     >
                                         <span className="relative z-10 flex items-center justify-center gap-2">
                                             {isSubmitting ? (
                                                 <>
-                                                    <svg className="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
-                                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                                    </svg>
+                                                    <Loader2 className="animate-spin h-5 w-5 text-white" />
                                                     กำลังส่งข้อความ...
                                                 </>
                                             ) : (
                                                 <>
-                                                    <svg className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                                                    </svg>
+                                                    <Send className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                                                     ส่งข้อความหาทีมงาน
                                                 </>
                                             )}

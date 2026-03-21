@@ -13,7 +13,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://chickenpay.com'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://chickenpay.com'),
+  alternates: {
+    canonical: '/',
+  },
   title: {
     default: "ChickenPay — ศูนย์รวมแอปพรีเมียมและบัญชีราคาถูก อันดับ 1",
     template: "%s | ChickenPay",

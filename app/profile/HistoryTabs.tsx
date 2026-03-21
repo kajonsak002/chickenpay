@@ -1,30 +1,53 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import Swal from "sweetalert2";
+import { ShoppingCart, Wallet, PackageX, CreditCard, ArrowRight, Copy, CheckCircle2 } from "lucide-react";
+import Pagination from "../components/ui/Pagination";
 
 export default function HistoryTabs({ orders, topups }: { orders: any[], topups: any[] }) {
     const [activeTab, setActiveTab] = useState<"orders" | "topups">("orders");
+    const [ordersPage, setOrdersPage] = useState(1);
+    const [topupsPage, setTopupsPage] = useState(1);
+    const LIMIT = 10;
+
+    const ordersTotalPages = Math.ceil(orders.length / LIMIT);
+    const currentOrders = orders.slice((ordersPage - 1) * LIMIT, ordersPage * LIMIT);
+
+    const topupsTotalPages = Math.ceil(topups.length / LIMIT);
+    const currentTopups = topups.slice((topupsPage - 1) * LIMIT, topupsPage * LIMIT);
 
     return (
         <div className="bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-6 shadow-lg h-full">
             {/* Tabs Header */}
-            <div className="flex border-b border-[var(--border-primary)] mb-6">
+            <div className="flex border-b border-[var(--border-primary)] mb-6" role="tablist" aria-label="ประวัติ">
                 <button
                     onClick={() => setActiveTab("orders")}
+                    role="tab"
+                    aria-selected={activeTab === "orders"}
+                    aria-controls="orders-panel"
+                    aria-label="ดูประวัติการสั่งซื้อ"
+                    id="orders-tab"
                     className={`pb-3 px-4 text-sm font-bold transition-colors relative flex items-center gap-2 ${activeTab === "orders" ? "text-blue-500" : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                         }`}
                 >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>
+                    <ShoppingCart size={16} />
                     ประวัติการสั่งซื้อ
                     {activeTab === "orders" && <span className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-500 rounded-t-full shadow-[0_0_8px_rgba(59,130,246,0.6)]"></span>}
                 </button>
                 <button
                     onClick={() => setActiveTab("topups")}
+                    role="tab"
+                    aria-selected={activeTab === "topups"}
+                    aria-controls="topups-panel"
+                    aria-label="ดูประวัติการฝากเงิน"
+                    id="topups-tab"
                     className={`pb-3 px-4 text-sm font-bold transition-colors relative flex items-center gap-2 ${activeTab === "topups" ? "text-orange-500" : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                         }`}
                 >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <Wallet size={16} />
                     ประวัติการฝากเงิน
                     {activeTab === "topups" && <span className="absolute bottom-0 left-0 w-full h-0.5 bg-orange-500 rounded-t-full shadow-[0_0_8px_rgba(249,115,22,0.6)]"></span>}
                 </button>
@@ -35,15 +58,13 @@ export default function HistoryTabs({ orders, topups }: { orders: any[], topups:
                 <div>
                     {orders.length === 0 ? (
                         <div className="py-20 flex flex-col items-center justify-center text-center">
-                            <svg className="w-16 h-16 text-[var(--border-primary)] mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                            </svg>
+                            <PackageX size={64} className="text-[var(--border-primary)] mb-4 mx-auto" strokeWidth={1} />
                             <p className="text-[var(--text-primary)] font-medium text-lg">ยังไม่มีประวัติการสั่งซื้อ</p>
                             <p className="text-[var(--text-secondary)] text-sm mt-1">คุณยังไม่ได้ทำการสั่งซื้อแอปพรีเมียมใดๆ</p>
                         </div>
                     ) : (
                         <div className="space-y-4">
-                            {orders.map((order) => (
+                            {currentOrders.map((order) => (
                                 <div key={order.id} className="p-4 rounded-xl border border-[var(--border-primary)] hover:border-blue-500/30 transition-colors bg-[var(--bg-primary)]">
                                     <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3 mb-4 pb-4 border-b border-[var(--border-primary)]">
                                         <div>
@@ -74,7 +95,7 @@ export default function HistoryTabs({ orders, topups }: { orders: any[], topups:
                                             <div key={item.id} className="flex items-center gap-3">
                                                 <div className="w-10 h-10 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-primary)] flex items-center justify-center overflow-hidden flex-shrink-0">
                                                     {item.product?.imageUrl ? (
-                                                        <img src={item.product.imageUrl} alt="" className="w-full h-full object-cover" />
+                                                        <Image src={item.product.imageUrl || ""} alt={item.product.name || "สินค้า"} width={40} height={40} className="w-full h-full object-cover" />
                                                     ) : (
                                                         <span className="text-lg">📦</span>
                                                     )}
@@ -90,7 +111,7 @@ export default function HistoryTabs({ orders, topups }: { orders: any[], topups:
                                         {(order.status === 'COMPLETED' || order.status === 'DELIVERED') && order.deliveryData && Array.isArray(order.deliveryData) && (
                                             <div className="mt-4 p-4 rounded-xl bg-[var(--bg-secondary)] border border-green-500/20 shadow-inner">
                                                 <h4 className="text-sm font-bold text-green-500 mb-3 flex items-center gap-2">
-                                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                                    <CheckCircle2 size={16} />
                                                     ข้อมูลบัญชีที่จัดส่ง
                                                 </h4>
                                                 <div className="space-y-3">
@@ -119,9 +140,10 @@ export default function HistoryTabs({ orders, topups }: { orders: any[], topups:
                                                                     <span className="text-[10px] text-[var(--text-secondary)] uppercase font-bold tracking-wider">ชุดที่ {idx + 1}</span>
                                                                     <button
                                                                         onClick={() => handleCopy(rawText, 'ข้อมูลทั้งหมด')}
+                                                                        aria-label="คัดลอกข้อมูลทั้งหมด"
                                                                         className="text-[10px] text-blue-400 hover:text-blue-300 flex items-center gap-1 transition-colors"
                                                                     >
-                                                                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" /></svg>
+                                                                        <Copy size={12} />
                                                                         คัดลอกทั้งหมด
                                                                     </button>
                                                                 </div>
@@ -132,14 +154,14 @@ export default function HistoryTabs({ orders, topups }: { orders: any[], topups:
                                                                             <p className="text-[10px] text-gray-500 mb-1">Email / Username</p>
                                                                             <div className="flex items-center gap-2 bg-black/20 p-2.5 rounded-lg border border-white/5">
                                                                                 <span className="flex-1 font-mono text-sm text-blue-400 truncate">{parts[0]}</span>
-                                                                                <button onClick={() => handleCopy(parts[0], 'อีเมล')} className="p-1.5 hover:bg-white/10 rounded-md transition-colors"><svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2" /></svg></button>
+                                                                                <button onClick={() => handleCopy(parts[0], 'อีเมล')} aria-label="คัดลอกอีเมล" className="p-1.5 hover:bg-white/10 rounded-md transition-colors"><Copy size={14} className="text-gray-400" /></button>
                                                                             </div>
                                                                         </div>
                                                                         <div className="relative">
                                                                             <p className="text-[10px] text-gray-500 mb-1">Password</p>
                                                                             <div className="flex items-center gap-2 bg-black/20 p-2.5 rounded-lg border border-white/5">
                                                                                 <span className="flex-1 font-mono text-sm text-orange-400 truncate">{parts[1]}</span>
-                                                                                <button onClick={() => handleCopy(parts[1], 'รหัสผ่าน')} className="p-1.5 hover:bg-white/10 rounded-md transition-colors"><svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2" /></svg></button>
+                                                                                <button onClick={() => handleCopy(parts[1], 'รหัสผ่าน')} aria-label="คัดลอกรหัสผ่าน" className="p-1.5 hover:bg-white/10 rounded-md transition-colors"><Copy size={14} className="text-gray-400" /></button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -157,6 +179,14 @@ export default function HistoryTabs({ orders, topups }: { orders: any[], topups:
                                     </div>
                                 </div>
                             ))}
+
+                            {orders.length > 0 && ordersTotalPages > 1 && (
+                                <Pagination
+                                    currentPage={ordersPage}
+                                    totalPages={ordersTotalPages}
+                                    onPageChange={(page) => setOrdersPage(page)}
+                                />
+                            )}
                         </div>
                     )}
                 </div>
@@ -167,18 +197,16 @@ export default function HistoryTabs({ orders, topups }: { orders: any[], topups:
                 <div>
                     {topups.length === 0 ? (
                         <div className="py-20 flex flex-col items-center justify-center text-center">
-                            <svg className="w-16 h-16 text-[var(--border-primary)] mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
+                            <CreditCard size={64} className="text-[var(--border-primary)] mb-4 mx-auto" strokeWidth={1} />
                             <p className="text-[var(--text-primary)] font-medium text-lg">ยังไม่มีประวัติการฝากเงิน</p>
                             <p className="text-[var(--text-secondary)] text-sm mt-1">คุณยังไม่ได้ทำรายการฝากเงินเข้าสู่ระบบ</p>
-                            <a href="/topup" className="mt-4 text-orange-400 hover:text-orange-300 text-sm font-bold flex items-center gap-1.5 transition-colors">
-                                เติมเงินทันที <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-                            </a>
+                            <Link href="/topup" className="mt-4 text-orange-400 hover:text-orange-300 text-sm font-bold flex items-center gap-1.5 transition-colors">
+                                เติมเงินทันที <ArrowRight size={16} />
+                            </Link>
                         </div>
                     ) : (
                         <div className="space-y-4">
-                            {topups.map((topup) => (
+                            {currentTopups.map((topup) => (
                                 <div key={topup.id} className="p-4 rounded-xl border border-[var(--border-primary)] hover:border-orange-500/30 transition-colors bg-[var(--bg-primary)]">
                                     <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3">
                                         <div className="flex items-center gap-4">
@@ -212,6 +240,14 @@ export default function HistoryTabs({ orders, topups }: { orders: any[], topups:
                                     )}
                                 </div>
                             ))}
+                            
+                            {topups.length > 0 && topupsTotalPages > 1 && (
+                                <Pagination
+                                    currentPage={topupsPage}
+                                    totalPages={topupsTotalPages}
+                                    onPageChange={(page) => setTopupsPage(page)}
+                                />
+                            )}
                         </div>
                     )}
                 </div>

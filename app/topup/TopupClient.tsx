@@ -1,12 +1,14 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import Breadcrumb from "../components/ui/Breadcrumb";
 import { useRouter } from "next/navigation";
 // @ts-ignore
 import generatePayload from "promptpay-qr";
 import { QRCodeSVG } from "qrcode.react";
 import Swal from "sweetalert2";
+import { Loader2, QrCode, UploadCloud, CheckCircle2 } from "lucide-react";
 
 const PRESET_AMOUNTS = [50, 100, 300, 500, 1000, 2000];
 
@@ -157,6 +159,7 @@ export default function TopupClient() {
                                 min="1"
                                 step="1"
                                 value={amount}
+                                aria-label="กรอกจำนวนเงินที่ต้องการเติม"
                                 onChange={(e) => {
                                     setAmount(e.target.value);
                                     cancelTransaction();
@@ -173,6 +176,7 @@ export default function TopupClient() {
                         {PRESET_AMOUNTS.map((amt) => (
                             <button
                                 key={amt}
+                                aria-label={`เติมเงิน ${amt} บาท`}
                                 onClick={() => {
                                     setAmount(amt.toString());
                                     cancelTransaction();
@@ -190,22 +194,18 @@ export default function TopupClient() {
                         <div className="pt-4 mt-2 border-t border-white/5 flex justify-center">
                             <button
                                 onClick={handleGenerate}
+                                aria-label="สร้าง QR Code เพื่อชำระเงิน"
                                 disabled={isGenerating || !amount}
                                 className="w-full h-14 rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold text-lg shadow-lg shadow-orange-500/20 hover:shadow-orange-500/40 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                             >
                                 {isGenerating ? (
                                     <>
-                                        <svg className="animate-spin -ml-1 mr-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                        </svg>
+                                        <Loader2 className="w-5 h-5 animate-spin -ml-1 mr-2 text-white" />
                                         กำลังสร้าง...
                                     </>
                                 ) : (
                                     <>
-                                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                                        </svg>
+                                        <QrCode className="w-6 h-6" />
                                         สร้าง QR Code รับเงิน
                                     </>
                                 )}
@@ -223,7 +223,7 @@ export default function TopupClient() {
                     <div className="bg-white rounded-3xl p-8 shadow-2xl relative overflow-hidden group border-4 border-white/20">
                         <div className="flex justify-center mb-6">
                             <div className="flex items-center gap-3">
-                                <img src="/logo.png" className="w-8 h-8 opacity-80" alt="Logo" />
+                                <Image src="/logo.png" width={32} height={32} className="opacity-80 object-contain" alt="Logo" />
                                 <span className="text-[#133F6E] font-black text-2xl tracking-tight">Prompt<span className="text-[#05A3BF]">Pay</span></span>
                             </div>
                         </div>
@@ -258,19 +258,19 @@ export default function TopupClient() {
 
                         <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-white/20 rounded-2xl cursor-pointer hover:bg-white/5 hover:border-orange-500/50 transition-all relative overflow-hidden">
                             {previewUrl ? (
-                                <img src={previewUrl} alt="Slip preview" className="absolute inset-0 w-full h-full object-cover opacity-60" />
+                                <Image src={previewUrl} alt="Slip preview" fill unoptimized className="absolute inset-0 w-full h-full object-cover opacity-60" />
                             ) : (
                                 <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                                    <svg className="w-8 h-8 text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
+                                    <UploadCloud className="w-8 h-8 text-gray-400 mb-2" />
                                     <p className="text-sm text-gray-400"><span className="font-semibold text-orange-400">คลิกเพื่ออัปโหลด</span> หรือลากไฟล์มาวาง</p>
                                 </div>
                             )}
-                            <input id="dropzone-file" type="file" accept="image/*" className="hidden" onChange={handleFileChange} disabled={isUploading} />
+                            <input id="dropzone-file" aria-label="อัปโหลดหลักฐานการโอนเงิน" type="file" accept="image/*" className="hidden" onChange={handleFileChange} disabled={isUploading} />
                         </label>
 
                         {previewUrl && (
                             <p className="text-xs text-green-400 text-center mt-3 font-semibold flex items-center justify-center gap-1">
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                                <CheckCircle2 size={16} />
                                 แนบไฟล์สำเร็จแล้ว
                             </p>
                         )}
@@ -279,28 +279,26 @@ export default function TopupClient() {
                             <button
                                 onClick={cancelTransaction}
                                 disabled={isUploading}
+                                aria-label="ยกเลิกการเติมเงิน"
                                 className="px-5 py-3 rounded-xl bg-white/5 text-gray-400 font-bold text-sm hover:bg-white/10 hover:text-red-400 transition-all disabled:opacity-50"
                             >
                                 ยกเลิก
                             </button>
                             <button
                                 onClick={handleConfirm}
+                                aria-label="อัปโหลดและยืนยันยอดเงิน"
                                 disabled={!slipFile || isUploading}
                                 className="flex-1 py-3 rounded-xl bg-[#22c55e] text-white font-bold text-sm shadow-[0_4px_20px_rgba(34,197,94,0.3)] hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:grayscale flex items-center justify-center gap-2"
                             >
                                 {isUploading ? (
                                     <>
-                                        <svg className="animate-spin -ml-1 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
-                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                        </svg>
+                                        <Loader2 className="animate-spin -ml-1 h-5 w-5 text-white" />
                                         กำลังยืนยัน...
                                     </>
                                 ) : "อัปโหลดและยืนยัน"}
                             </button>
                         </div>
                     </div>
-
                 </div>
             )}
         </div>

@@ -4,6 +4,8 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import { logoutAction } from "../../actions/auth";
 
+import { LogOut } from "lucide-react";
+
 export default function LogoutButton() {
     const router = useRouter();
 
@@ -33,8 +35,9 @@ export default function LogoutButton() {
     return (
         <button
             onClick={handleLogout}
-            className="w-full py-2.5 rounded-xl border border-red-500/30 text-red-500 text-sm font-semibold hover:bg-red-500 hover:text-white transition-all duration-300 cursor-pointer"
+            className="w-full py-2.5 flex items-center justify-center gap-2 rounded-xl border border-red-500/30 text-red-500 text-sm font-semibold hover:bg-red-500 hover:text-white transition-all duration-300 cursor-pointer"
         >
+            <LogOut size={16} />
             ออกจากระบบ
         </button>
     );

@@ -2,6 +2,8 @@
 
 import { useActionState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
+import { LogIn } from "lucide-react";
 import NavbarClient from "../components/ui/NavbarClient";
 import Footer from "../components/ui/Footer";
 import { loginAction } from "../actions/auth";
@@ -49,9 +51,7 @@ export default function LoginPage() {
                 <div className="w-full max-w-md bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-2xl p-6 sm:p-8 shadow-2xl">
                     <div className="text-center mb-8">
                         <div className="w-12 h-12 rounded-xl bg-orange-500/10 text-orange-500 flex items-center justify-center mx-auto mb-4">
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-                            </svg>
+                            <LogIn size={24} />
                         </div>
                         <h1 className="text-2xl font-bold text-[var(--text-primary)] mb-2">เข้าสู่ระบบ</h1>
                         <p className="text-[var(--text-secondary)] text-sm">ยินดีต้อนรับกลับเข้าสู่ ChickenPay</p>
@@ -89,7 +89,7 @@ export default function LoginPage() {
                     </form>
 
                     <p className="mt-6 text-center text-sm text-[var(--text-secondary)]">
-                        ยังไม่มีบัญชีใช่หรือไม่? <a href="/register" className="text-orange-500 font-medium hover:underline">สมัครสมาชิกที่นี่</a>
+                        ยังไม่มีบัญชีใช่หรือไม่? <Link href="/register" className="text-orange-500 font-medium hover:underline p-1">สมัครสมาชิกที่นี่</Link>
                     </p>
                 </div>
             </div>

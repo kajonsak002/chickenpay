@@ -2,7 +2,10 @@
 
 import { useState } from "react";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
+import Image from "next/image";
 import { useAuth } from "../../contexts/AuthContext";
+import { ShieldAlert, User, LogIn, UserPlus, Menu, X } from "lucide-react";
 
 const navLinks = [
     { label: "หน้าแรก", href: "/" },
@@ -31,11 +34,11 @@ export default function NavbarClient({
                 <div className="flex items-center justify-between h-16">
 
                     {/* Logo */}
-                    <a href="/" className="flex items-center gap-2.5 group">
+                    <Link href="/" className="flex items-center gap-2.5 group" aria-label="ChickenPay - หน้าแรก">
                         <div className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-orange-600
               flex items-center justify-center shadow-lg shadow-orange-500/25
               group-hover:shadow-orange-500/40 group-hover:scale-105 transition-all duration-300">
-                            <img src="/logo.png" alt="" className="w-full h-full object-contain" />
+                            <Image src="/logo.png" alt="โลโก้ ChickenPay" width={40} height={40} className="w-full h-full object-contain" priority />
                             <div className="absolute inset-0 rounded-xl border border-orange-400/30 group-hover:border-orange-400/60 transition-colors" />
                         </div>
                         <div className="hidden sm:block">
@@ -44,13 +47,13 @@ export default function NavbarClient({
                             </span>
                             <div className="h-0.5 w-0 group-hover:w-full bg-gradient-to-r from-orange-500 to-orange-300 transition-all duration-300 rounded-full" />
                         </div>
-                    </a>
+                    </Link>
 
                     <div className="hidden md:flex items-center gap-1">
                         {navLinks.map((link) => {
                             const isActive = pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href));
                             return (
-                                <a
+                                <Link
                                     key={link.label}
                                     href={link.href}
                                     className={`relative px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 flex items-center gap-2
@@ -63,11 +66,11 @@ export default function NavbarClient({
                                     {isActive && (
                                         <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-4 h-[2px] bg-orange-500 rounded-full shadow-[0_0_8px_rgba(249,115,22,0.8)]" />
                                     )}
-                                </a>
+                                </Link>
                             );
                         })}
                         {isAdmin && (
-                            <a
+                            <Link
                                 href="/admin"
                                 className={`relative px-4 py-2 rounded-xl text-sm font-bold transition-all duration-300 flex items-center gap-2
                                     ${pathname.startsWith("/admin")
@@ -75,72 +78,69 @@ export default function NavbarClient({
                                         : "text-purple-400 hover:text-white hover:bg-purple-500/10"
                                     }`}
                             >
-                                🛡 แอดมิน
-                            </a>
+                                <ShieldAlert size={16} /> แอดมิน
+                            </Link>
                         )}
                     </div>
 
                     {/* Auth Buttons */}
                     <div className="hidden md:flex items-center gap-3">
                         {isLoggedIn ? (
-                            <a href="/profile" className="px-5 py-2 text-sm font-semibold text-white rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 shadow-lg shadow-orange-500/20 hover:shadow-orange-500/40 hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer flex items-center gap-2">
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                </svg>
+                            <Link href="/profile" className="px-5 py-2 text-sm font-semibold text-white rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 shadow-lg shadow-orange-500/20 hover:shadow-orange-500/40 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center gap-2">
+                                <User size={16} />
                                 โปรไฟล์
-                            </a>
+                            </Link>
                         ) : (
                             <>
-                                <a href="/login" className="px-5 py-2 text-sm font-semibold text-gray-300 rounded-xl border border-white/10 hover:border-orange-500/40 hover:text-white hover:bg-white/5 transition-all duration-300 cursor-pointer">
-                                    เข้าสู่ระบบ
-                                </a>
-                                <a href="/register" className="px-5 py-2 text-sm font-semibold text-white rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 shadow-lg shadow-orange-500/20 hover:shadow-orange-500/40 hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer">
-                                    สมัครสมาชิก
-                                </a>
+                                <Link href="/login" className="px-5 py-2 text-sm font-semibold text-gray-300 rounded-xl border border-white/10 hover:border-orange-500/40 hover:text-white hover:bg-white/5 transition-all duration-300 flex items-center gap-2">
+                                    <LogIn size={16} />เข้าสู่ระบบ
+                                </Link>
+                                <Link href="/register" className="px-5 py-2 text-sm font-semibold text-white rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 shadow-lg shadow-orange-500/20 hover:shadow-orange-500/40 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center gap-2">
+                                    <UserPlus size={16} />สมัครสมาชิก
+                                </Link>
                             </>
                         )}
                     </div>
 
-                    {/* Mobile Hamburger */}
+                    {/* Mobile Hamburger Touch Target >= 44x44 */}
                     <button
                         onClick={() => setMenuOpen(!menuOpen)}
-                        className="md:hidden relative w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-300 hover:text-orange-400 hover:border-orange-500/30 transition-all duration-300 cursor-pointer"
+                        aria-label={menuOpen ? "ปิดเมนู" : "เปิดเมนู"}
+                        aria-expanded={menuOpen}
+                        aria-controls="mobile-menu"
+                        className="md:hidden relative w-11 h-11 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-300 hover:text-orange-400 hover:border-orange-500/30 transition-all duration-300 cursor-pointer"
                     >
-                        <div className="flex flex-col gap-1.5 w-5">
-                            <span className={`block h-0.5 bg-current rounded-full transition-all duration-300 origin-center ${menuOpen ? "rotate-45 translate-y-2" : ""}`} />
-                            <span className={`block h-0.5 bg-current rounded-full transition-all duration-300 ${menuOpen ? "opacity-0 scale-0" : ""}`} />
-                            <span className={`block h-0.5 bg-current rounded-full transition-all duration-300 origin-center ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
-                        </div>
+                        {menuOpen ? <X size={20} /> : <Menu size={20} />}
                     </button>
                 </div>
             </div>
 
             {/* Mobile Menu Dropdown */}
-            <div className={`md:hidden overflow-hidden transition-all duration-500 ease-in-out ${menuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}>
+            <div id="mobile-menu" className={`md:hidden overflow-hidden transition-all duration-500 ease-in-out ${menuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}>
                 <div className="px-4 py-4 border-t border-white/5 bg-black/90 backdrop-blur-xl space-y-1">
                     {navLinks.map((link) => (
-                        <a key={link.label} href={link.href} className="block px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 text-gray-400 hover:text-white hover:bg-white/5">
+                        <Link key={link.label} href={link.href} onClick={() => setMenuOpen(false)} className="block px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 text-gray-400 hover:text-white hover:bg-white/5">
                             {link.label}
-                        </a>
+                        </Link>
                     ))}
                     {isAdmin && (
-                        <a href="/admin" className="block px-4 py-3 rounded-xl text-sm font-bold transition-all duration-300 text-purple-400 hover:bg-purple-500/10">
-                            🛡 แอดมิน
-                        </a>
+                        <Link href="/admin" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-bold transition-all duration-300 text-purple-400 hover:bg-purple-500/10">
+                            <ShieldAlert size={16} /> แอดมิน
+                        </Link>
                     )}
-                    <div className="flex gap-3 pt-3 mt-2 border-t border-white/5">
+                    <div className="flex flex-col gap-3 pt-3 mt-2 border-t border-white/5">
                         {isLoggedIn ? (
-                            <a href="/profile" className="flex-1 px-4 py-2.5 text-sm font-bold text-white text-center rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 shadow-lg shadow-orange-500/20 transition-all cursor-pointer">
-                                โปรไฟล์ของฉัน
-                            </a>
+                            <Link href="/profile" onClick={() => setMenuOpen(false)} className="flex items-center justify-center gap-2 w-full px-4 py-3 min-h-[44px] text-sm font-bold text-white rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 shadow-lg shadow-orange-500/20 transition-all">
+                                <User size={16} /> โปรไฟล์ของฉัน
+                            </Link>
                         ) : (
                             <>
-                                <a href="/login" className="flex-1 px-4 py-2.5 text-sm font-bold text-gray-300 text-center rounded-xl border border-white/10 hover:border-orange-500/40 transition-all cursor-pointer">
-                                    เข้าสู่ระบบ
-                                </a>
-                                <a href="/register" className="flex-1 px-4 py-2.5 text-sm font-bold text-white text-center rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 shadow-lg shadow-orange-500/20 transition-all cursor-pointer">
-                                    สมัครสมาชิก
-                                </a>
+                                <Link href="/login" onClick={() => setMenuOpen(false)} className="flex items-center justify-center gap-2 w-full px-4 py-3 min-h-[44px] text-sm font-bold text-gray-300 rounded-xl border border-white/10 hover:border-orange-500/40 transition-all">
+                                    <LogIn size={16} /> เข้าสู่ระบบ
+                                </Link>
+                                <Link href="/register" onClick={() => setMenuOpen(false)} className="flex items-center justify-center gap-2 w-full px-4 py-3 min-h-[44px] text-sm font-bold text-white rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 shadow-lg shadow-orange-500/20 transition-all">
+                                    <UserPlus size={16} /> สมัครสมาชิก
+                                </Link>
                             </>
                         )}
                     </div>

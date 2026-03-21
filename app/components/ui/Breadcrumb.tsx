@@ -8,6 +8,8 @@ interface BreadcrumbItem {
     href?: string;
 }
 
+import { ChevronRight } from "lucide-react";
+
 export default function Breadcrumb({ items }: { items?: BreadcrumbItem[] }) {
     const pathname = usePathname();
 
@@ -21,7 +23,7 @@ export default function Breadcrumb({ items }: { items?: BreadcrumbItem[] }) {
         paths.forEach((path, index) => {
             const href = "/" + paths.slice(0, index + 1).join("/");
             let label = path.charAt(0).toUpperCase() + path.slice(1);
-            
+
             // Map common paths to Thai
             if (path === "apps") label = "แอปพรีเมียม";
             if (path === "profile") label = "บัญชีของฉัน";
@@ -30,7 +32,7 @@ export default function Breadcrumb({ items }: { items?: BreadcrumbItem[] }) {
             if (path === "product") label = "สินค้า";
             if (path === "login") label = "เข้าสู่ระบบ";
             if (path === "register") label = "สมัครสมาชิก";
-            
+
             // For dynamic [category] we might need better decoding, handled in props
             if (path.includes("%")) label = decodeURIComponent(path);
 
@@ -44,14 +46,10 @@ export default function Breadcrumb({ items }: { items?: BreadcrumbItem[] }) {
         <nav className="flex items-center gap-2 text-xs sm:text-sm text-[var(--text-secondary)] mb-6 animate-fade-in overflow-x-auto no-scrollbar whitespace-nowrap py-1">
             {displayItems.map((item, index) => (
                 <div key={index} className="flex items-center gap-2">
-                    {index > 0 && (
-                        <svg className="w-3 h-3 text-[var(--text-muted)] opacity-50 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                        </svg>
-                    )}
-                    
+                    {index > 0 && <ChevronRight size={14} className="text-[var(--text-muted)] opacity-50 flex-shrink-0" />}
+
                     {item.href && index < displayItems.length - 1 ? (
-                        <Link 
+                        <Link
                             href={item.href}
                             className="hover:text-orange-500 transition-colors duration-200"
                         >

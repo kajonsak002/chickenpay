@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://chickenpay.com'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://chickenpay-dev.up.railway.app/'),
   alternates: {
     canonical: '/',
   },
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "ChickenPay - ซื้อแอปพรีเมียม ราคาถูก",
     description: "Netflix, Spotify, YouTube Premium ราคาถูก ปลอดภัย 100%",
-    url: "https://chickenpay.com",
+    url: "https://chickenpay-dev.up.railway.app/",
     siteName: "ChickenPay Premium Apps",
     locale: "th_TH",
     type: "website",

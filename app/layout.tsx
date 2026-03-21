@@ -89,6 +89,31 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "ChickenPay",
+  "url": BASE_URL,
+  "description": "แหล่งรวมแอปพลิเคชันพรีเมียมราคาประหยัด Netflix, Spotify, YouTube Premium พร้อมรับประกันการใช้งาน 100% ส่งมอบอัตโนมัติ 24 ชั่วโมง",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": `${BASE_URL}/search?q={search_term_string}`,
+    "query-input": "required name=search_term_string"
+  }
+};
+
+const organizationLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "ChickenPay Premium Apps",
+  "url": BASE_URL,
+  "logo": `${BASE_URL}/logo.png`,
+  "sameAs": [
+    "https://facebook.com/chickenpay", // Replace with real links if available
+    "https://line.me/ti/p/@chickenpay"
+  ]
+};
+
 import { ThemeProvider } from "./components/ThemeProvider";
 import { AuthProvider } from "./contexts/AuthContext";
 import { cookies } from "next/headers";
@@ -127,6 +152,14 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationLd) }}
+        />
         <ThemeProvider>
           <AuthProvider user={user}>{children}</AuthProvider>
         </ThemeProvider>

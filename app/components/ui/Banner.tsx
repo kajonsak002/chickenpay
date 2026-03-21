@@ -85,6 +85,10 @@ export default function Banner({
 
     return (
         <div className="relative w-full py-8 overflow-hidden select-none">
+            {/* SEO Keyword-Rich Title (Visually Hidden) */}
+            <h1 className="sr-only">
+                ChickenPay - แหล่งรวมแอปพรีเมียมราคาถูกที่สุด อันดับ 1 ซื้อ Netflix, Spotify, YouTube Premium แท้ 100%
+            </h1>
             {/* Slides Container */}
             <div className="relative flex items-center justify-center h-[200px] sm:h-[280px] md:h-[350px] lg:h-[420px]">
                 {slides.map((slide, index) => {

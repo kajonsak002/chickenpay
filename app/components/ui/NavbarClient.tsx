@@ -10,6 +10,7 @@ import { ShieldAlert, User, LogIn, UserPlus, Menu, X } from "lucide-react";
 const navLinks = [
     { label: "หน้าแรก", href: "/" },
     { label: "แอปพรีเมียม", href: "/apps" },
+    { label: "บทความ", href: "/blog" },
     { label: "ติดต่อเรา", href: "/contact" },
 ];
 

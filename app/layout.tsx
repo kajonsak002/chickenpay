@@ -12,33 +12,61 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const BASE_URL =
+  process.env.NEXT_PUBLIC_APP_URL ||
+  "https://chickenpay-dev.up.railway.app";
+
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://chickenpay-dev.up.railway.app/'),
+  metadataBase: new URL(BASE_URL),
+
   alternates: {
-    canonical: '/',
+    canonical: "/",
   },
+
   title: {
     default: "ChickenPay - ซื้อแอปพรีเมียม ราคาถูก",
     template: "%s | ChickenPay",
   },
-  description: "Netflix, Spotify, YouTube Premium ราคาถูก ปลอดภัย 100%",
-  keywords: ["แอปพรีเมียม", "Netflix ราคาถูก", "Spotify พรีเมียม", "Youtube Premium ของแท้", "แอปแท้", "ซื้อแอปราคาถูก", "ChickenPay"],
+
+  description:
+    "Netflix, Spotify, YouTube Premium ราคาถูก ปลอดภัย 100%",
+
+  keywords: [
+    "แอปพรีเมียม",
+    "Netflix ราคาถูก",
+    "Spotify พรีเมียม",
+    "Youtube Premium ของแท้",
+    "แอปแท้",
+    "ซื้อแอปราคาถูก",
+    "ChickenPay",
+  ],
+
   openGraph: {
     title: "ChickenPay - ซื้อแอปพรีเมียม ราคาถูก",
-    description: "Netflix, Spotify, YouTube Premium ราคาถูก ปลอดภัย 100%",
-    url: "https://chickenpay-dev.up.railway.app/",
+    description:
+      "Netflix, Spotify, YouTube Premium ราคาถูก ปลอดภัย 100%",
+    url: BASE_URL,
     siteName: "ChickenPay Premium Apps",
     locale: "th_TH",
     type: "website",
     images: [
       {
-        url: "/preview.jpg",
+        url: `${BASE_URL}/preview.jpg`,
         width: 1200,
         height: 630,
         alt: "ChickenPay - Premium Apps Marketplace",
       },
     ],
   },
+
+  twitter: {
+    title: "ChickenPay — ศูนย์รวมแอปพรีเมียมราคาถูก",
+    description:
+      "Netflix, Spotify, YouTube Premium ราคาถูก ปลอดภัย 100%",
+    card: "summary_large_image",
+    images: [`${BASE_URL}/preview.jpg`],
+  },
+
   robots: {
     index: true,
     follow: true,
@@ -50,14 +78,12 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  twitter: {
-    title: "ChickenPay — ศูนย์รวมแอปพรีเมียมราคาถูก",
-    card: "summary_large_image",
-  },
+
   icons: {
     icon: "/logo.png",
     apple: "/logo.png",
   },
+
   verification: {
     google: "otCDcvsnLkzfCIxCyErpkPCK81vbyakWRchcJu7iDZs",
   },
@@ -73,10 +99,15 @@ async function getUser() {
   if (!token) return null;
 
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'}/auth/profile`, {
-      headers: { Authorization: `Bearer ${token}` },
-      cache: 'no-store'
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"
+      }/auth/profile`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+        cache: "no-store",
+      }
+    );
+
     if (res.ok) return await res.json();
     return null;
   } catch {
@@ -86,9 +117,9 @@ async function getUser() {
 
 export default async function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   const user = await getUser();
 
   return (
@@ -97,9 +128,7 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider>
-          <AuthProvider user={user}>
-            {children}
-          </AuthProvider>
+          <AuthProvider user={user}>{children}</AuthProvider>
         </ThemeProvider>
       </body>
     </html>

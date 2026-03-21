@@ -18,18 +18,26 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   title: {
-    default: "ChickenPay — ศูนย์รวมแอปพรีเมียมและบัญชีราคาถูก อันดับ 1",
+    default: "ChickenPay - ซื้อแอปพรีเมียม ราคาถูก",
     template: "%s | ChickenPay",
   },
-  description: "แหล่งรวมแอปพลิเคชันพรีเมียมราคาประหยัด Netflix, Spotify, YouTube Premium พร้อมรับประกันการใช้งาน 100% ส่งมอบอัตโนมัติ 24 ชั่วโมง ของแท้ราคาถูกที่สุด",
+  description: "Netflix, Spotify, YouTube Premium ราคาถูก ปลอดภัย 100%",
   keywords: ["แอปพรีเมียม", "Netflix ราคาถูก", "Spotify พรีเมียม", "Youtube Premium ของแท้", "แอปแท้", "ซื้อแอปราคาถูก", "ChickenPay"],
   openGraph: {
-    title: "ChickenPay — ศูนย์รวมแอปพรีเมียมและบัญชีราคาถูก",
-    description: "แพลตฟอร์มจำหน่ายบัญชีสตรีมมิ่งพรีเมียมของแท้ ถูกที่สุด พร้อมรับประกัน 100% จัดส่งทันที",
+    title: "ChickenPay - ซื้อแอปพรีเมียม ราคาถูก",
+    description: "Netflix, Spotify, YouTube Premium ราคาถูก ปลอดภัย 100%",
     url: "https://chickenpay.com",
     siteName: "ChickenPay Premium Apps",
     locale: "th_TH",
     type: "website",
+    images: [
+      {
+        url: "/preview.jpg",
+        width: 1200,
+        height: 630,
+        alt: "ChickenPay - Premium Apps Marketplace",
+      },
+    ],
   },
   robots: {
     index: true,
